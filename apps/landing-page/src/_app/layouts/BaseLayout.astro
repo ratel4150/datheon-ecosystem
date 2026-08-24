@@ -1,27 +1,16 @@
 ---
-// apps/landing-page/src/_app/layouts/BaseLayout.astro
+// src/_app/layouts/BaseLayout.astro
 import { MainHeader } from '@/_widgets/header';
 import { ThemeProvider } from '@/_app/providers/ThemeProvider';
 import { QueryProvider } from '@/_app/providers/QueryProvider';
-import type { Locale, Translations } from '@/_shared/types/i18n';
-import { getTranslation } from '@/_shared/lib/i18n';
 import '@/_app/styles/globals.css';
 
 export interface Props {
-  title?: string;
-  description?: string;
-  lang?: Locale;
-  pathname?: string;
+  lang?: string;
+  children?: any;
 }
 
-const { 
-  title = 'Datheon - Plataforma SaaS con IA',
-  description = 'Aprende con Inteligencia Artificial',
-  lang = 'es',
-  pathname = '/'
-} = Astro.props;
-
-const t = getTranslation(lang);
+const { lang = 'es' } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -29,33 +18,18 @@ const t = getTranslation(lang);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Google Fonts - Poppins -->
+    <title>Datheón - Smart Tech Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link 
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" 
       rel="stylesheet" 
     />
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://datheon.io${pathname}`} />
-    <meta property="og:type" content="website" />
-    
-    <!-- Language alternates -->
-    <link rel="alternate" hreflang="es" href={`https://datheon.io${pathname}`} />
-    <link rel="alternate" hreflang="en" href={`https://datheon.io/en${pathname}`} />
-    <link rel="alternate" hreflang="x-default" href={`https://datheon.io${pathname}`} />
   </head>
   <body>
     <ThemeProvider>
       <QueryProvider>
-        <MainHeader lang={lang} t={t} />
+        <MainHeader lang={lang} client:load />
         <main>
           <slot />
         </main>

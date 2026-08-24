@@ -1,39 +1,12 @@
 ---
-// apps/landing-page/src/_widgets/header/ui/MainHeader.astro
-import { Container } from '@/_shared/ui/Container';
-import { Logo } from './Logo.astro';
-import { NavLinks } from './NavLinks.astro';
-import { AuthButtons } from './AuthButtons.astro';
-import { MobileMenu } from './MobileMenu.astro';
-import { LanguageSelector } from './LanguageSelector.astro';
-import type { I18nProps } from '@/_shared/types/i18n';
+// _widgets/header/ui/MainHeader.astro
+import { ClerkProvider } from '@/_app/providers/ClerkProvider';
+import { AppBarMain } from './AppBarMain';
+import type { HeaderProps } from '../model/header.types';
 
-export interface Props extends I18nProps {
-  isScrolled?: boolean;
-}
-
-const { lang, t, isScrolled = false } = Astro.props;
+const { lang = 'es' } = Astro.props as HeaderProps;
 ---
 
-<header class={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md ${
-  isScrolled 
-    ? 'bg-[#0B0F2B]/90 border-b border-white/10' 
-    : 'bg-transparent'
-}`}>
-  <Container>
-    <div class="flex items-center justify-between h-16 md:h-20">
-      <Logo />
-      
-      <div class="hidden md:flex items-center gap-6">
-        <NavLinks t={t} />
-        <LanguageSelector currentLang={lang} />
-        <AuthButtons t={t} />
-      </div>
-      
-      <div class="md:hidden flex items-center gap-2">
-        <LanguageSelector currentLang={lang} />
-        <MobileMenu t={t} lang={lang} />
-      </div>
-    </div>
-  </Container>
-</header>
+<ClerkProvider client:load>
+  <AppBarMain client:load currentLang={lang} />
+</ClerkProvider>
