@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_widgets/header/ui/AppBarMain.tsx
 'use client';
 
 import {
@@ -23,6 +24,7 @@ import { C } from '../consts/header.constants';
 import { servicesData, sectorsData } from '../consts/header.constants';
 import { tx } from '../lib/header.utils';
 import type { Lang } from '../model/header.types';
+import { LanguageSwitcher } from '@/_widgets/language-switcher';
 
 type Props = { currentLang: string };
 
@@ -152,9 +154,7 @@ export function AppBarMain({ currentLang }: Props) {
           {/* Right actions */}
           <Stack direction="row" spacing={{ xs: 0.5, sm: 0.75 }}
             sx={{ alignItems: 'center', ml: 'auto', flexShrink: 0 }}>
-            <Box sx={{ px: 1, py: 0.5, fontSize: '0.8rem', color: C.textMute }}>
-              {lang.toUpperCase()}
-            </Box>
+           <LanguageSwitcher currentLang={lang} client:load />
 
             <IconButton size="small" title={tx('darkMode', lang)} sx={{
               color: C.textMute,
