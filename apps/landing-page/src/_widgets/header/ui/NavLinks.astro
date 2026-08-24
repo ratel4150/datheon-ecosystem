@@ -1,0 +1,29 @@
+---
+// apps/landing-page/src/_widgets/header/ui/NavLinks.astro
+import type { Translations } from '@/_shared/types/i18n';
+
+export interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+
+const links = [
+  { href: '#platform', label: t.nav.platform },
+  { href: '#academy', label: t.nav.academy },
+  { href: '#casebook', label: t.nav.casebook },
+  { href: '/pricing', label: t.nav.pricing },
+];
+---
+
+<nav class="flex items-center gap-6">
+  {links.map((link) => (
+    <a 
+      key={link.href} 
+      href={link.href} 
+      class="text-gray-300 hover:text-[#00AEEF] transition-colors font-medium text-sm lg:text-base"
+    >
+      {link.label}
+    </a>
+  ))}
+</nav>

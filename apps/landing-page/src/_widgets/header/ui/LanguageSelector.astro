@@ -1,0 +1,34 @@
+---
+// apps/landing-page/src/_widgets/header/ui/LanguageSelector.astro
+import type { Locale } from '@/_shared/types/i18n';
+
+export interface Props {
+  currentLang: Locale;
+}
+
+const { currentLang } = Astro.props;
+
+const languages = [
+  { code: 'es', label: 'ES', path: '/' },
+  { code: 'en', label: 'EN', path: '/en' },
+];
+---
+
+<div class="flex items-center gap-1">
+  {languages.map((lang) => {
+    const isActive = lang.code === currentLang;
+    return (
+      <a
+        key={lang.code}
+        href={lang.path}
+        class={`px-2 py-1 text-sm font-medium rounded-lg transition-colors ${
+          isActive 
+            ? 'bg-[#00AEEF] text-white' 
+            : 'text-gray-400 hover:text-white hover:bg-white/10'
+        }`}
+      >
+        {lang.label}
+      </a>
+    );
+  })}
+</div>
