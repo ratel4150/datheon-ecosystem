@@ -1,3 +1,4 @@
+/* File: apps/landing-page/src/_app/styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,10 +6,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #0B0F2B;
   }
   
   body {
     @apply antialiased;
+    background-color: #0B0F2B;
+    color: #F5F5F5;
   }
 }
 
