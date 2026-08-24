@@ -1,0 +1,23 @@
+{
+  "name": "@datheon/ecosystem",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules services/*/node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "@types/bun": "latest",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "bun@1.0.0"
+}

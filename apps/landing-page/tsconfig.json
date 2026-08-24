@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/_shared/*": ["./src/_shared/*"],
+      "@/_entities/*": ["./src/_entities/*"],
+      "@/_features/*": ["./src/_features/*"],
+      "@/_widgets/*": ["./src/_widgets/*"],
+      "@/_pages/*": ["./src/_pages/*"]
+    }
+  }
+}
