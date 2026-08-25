@@ -19,12 +19,14 @@ import { useEffect, useState } from 'react';
 import { DropdownMenu } from './DropdownMenu';
 import { NavItem } from './NavItem';
 import { MobileNavGroup } from './MobileNavGroup';
-// import { ClerkAuth } from './ClerkAuth';  // COMENTADO TEMPORALMENTE
+// import { ClerkAuth } from './ClerkAuth'; // COMENTADO TEMPORALMENTE
+import { LanguageSwitcher } from '@/_widgets/language-switcher';
+import { ThemeToggle } from '@/_widgets/theme-toggle';
 import { C } from '../consts/header.constants';
-import { servicesData, sectorsData } from '../consts/header.constants';
+
 import { tx } from '../lib/header.utils';
 import type { Lang } from '../model/header.types';
-import { LanguageSwitcher } from '@/_widgets/language-switcher';
+import { sectorsData, servicesData } from '@/_shared/lib/header';
 
 type Props = { currentLang: string };
 
@@ -154,18 +156,17 @@ export function AppBarMain({ currentLang }: Props) {
           {/* Right actions */}
           <Stack direction="row" spacing={{ xs: 0.5, sm: 0.75 }}
             sx={{ alignItems: 'center', ml: 'auto', flexShrink: 0 }}>
-           <LanguageSwitcher currentLang={lang} client:load />
 
-            <IconButton size="small" title={tx('darkMode', lang)} sx={{
-              color: C.textMute,
-              width: { xs: 32, md: 36 }, height: { xs: 32, md: 36 },
-              '&:hover': { color: C.accent, bgcolor: C.accentBg },
-            }}>
-              <FaMoon size={14} />
-            </IconButton>
+            {/* Language Switcher */}
+            <LanguageSwitcher currentLang={lang}/>
 
-            {/* <ClerkAuth lang={lang} />  COMENTADO */}
+            {/* Theme Toggle */}
+            <ThemeToggle  />
 
+            {/* ClerkAuth - COMENTADO TEMPORALMENTE */}
+            {/* <ClerkAuth lang={lang} /> */}
+
+            {/* CTA — lg+ */}
             {mounted && isLg && (
               <Link href="https://calendly.com/team_datheon/consulta-gratuita"
                 target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
@@ -187,6 +188,7 @@ export function AppBarMain({ currentLang }: Props) {
               </Link>
             )}
 
+            {/* Hamburger — mobile */}
             {mounted && isMobile && (
               <IconButton onClick={() => setDrawerOpen(true)} aria-label="Abrir menú"
                 sx={{
@@ -203,7 +205,7 @@ export function AppBarMain({ currentLang }: Props) {
       </AppBar>
 
       {/* Drawer mobile */}
-    <Drawer 
+   <Drawer 
   anchor="right" 
   open={drawerOpen} 
   onClose={closeAll}
@@ -215,11 +217,9 @@ export function AppBarMain({ currentLang }: Props) {
         boxShadow: '-4px 0 40px rgba(0,0,0,0.10)',
         borderLeft: `1px solid ${C.border}`,
       },
-    },
-    root: {
-      disableScrollLock: true,
-    },
+    }
   }}
+  ModalProps={{ disableScrollLock: true }}
 >
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
           <Box sx={{
@@ -283,7 +283,7 @@ export function AppBarMain({ currentLang }: Props) {
 
             <Box sx={{ mt: 1.5, px: 0.5 }}>
               <Divider sx={{ mb: 1.5, borderColor: C.border }} />
-              {/* <ClerkAuth lang={lang} /> COMENTADO */}
+              {/* <ClerkAuth lang={lang} /> COMENTADO TEMPORALMENTE */}
             </Box>
           </Box>
 

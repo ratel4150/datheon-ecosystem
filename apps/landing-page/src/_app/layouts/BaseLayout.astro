@@ -1,8 +1,10 @@
 ---
 // src/_app/layouts/BaseLayout.astro
 import { MainHeader } from '@/_widgets/header';
-import { ThemeProvider } from '@/_app/providers/ThemeProvider';
+import { ThemeProvider } from '@/_app/providers/ThemeProvider'; // MUI Theme
 import { QueryProvider } from '@/_app/providers/QueryProvider';
+import { ClerkProvider } from '@/_app/providers/ClerkProvider';
+import { ThemeClientProvider } from '@/_app/providers/ThemeClientProvider';
 import '@/_app/styles/globals.css';
 
 export interface Props {
@@ -27,13 +29,15 @@ const { lang = 'es' } = Astro.props;
     />
   </head>
   <body>
-    <ThemeProvider>
-      <QueryProvider>
-        <MainHeader lang={lang} client:load />
+     <ThemeProvider> {/* MUI Theme, esto sí puede seguir como estaba */}
+    <QueryProvider>
+      <ClerkProvider client:load>
+        <MainHeader lang={lang} />
         <main>
           <slot />
         </main>
-      </QueryProvider>
-    </ThemeProvider>
+      </ClerkProvider>
+    </QueryProvider>
+  </ThemeProvider>
   </body>
 </html>
