@@ -1,0 +1,27 @@
+
+---
+// src/pages/[lang]/servicios.astro
+import { BaseLayout } from '@/_app/layouts';
+import { getTranslation } from '@/_shared/lib/i18n';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const currentLang = (lang as string) || 'es';
+const t = getTranslation(currentLang);
+---
+
+<BaseLayout lang={currentLang}>
+  <div class="min-h-screen flex items-center justify-center bg-[#0B0F2B]">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-white">Servicios</h1>
+      <p class="text-gray-300">Página de servicios en {currentLang}</p>
+    </div>
+  </div>
+</BaseLayout>

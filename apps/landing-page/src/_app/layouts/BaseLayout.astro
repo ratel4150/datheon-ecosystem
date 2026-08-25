@@ -1,10 +1,9 @@
 ---
 // src/_app/layouts/BaseLayout.astro
 import { MainHeader } from '@/_widgets/header';
-import { ThemeProvider } from '@/_app/providers/ThemeProvider'; // MUI Theme
+import { ThemeProvider } from '@/_app/providers/ThemeProvider';
 import { QueryProvider } from '@/_app/providers/QueryProvider';
 import { ClerkProvider } from '@/_app/providers/ClerkProvider';
-import { ThemeClientProvider } from '@/_app/providers/ThemeClientProvider';
 import '@/_app/styles/globals.css';
 
 export interface Props {
@@ -23,21 +22,21 @@ const { lang = 'es' } = Astro.props;
     <title>Datheón - Smart Tech Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" 
-      rel="stylesheet" 
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>
-     <ThemeProvider> {/* MUI Theme, esto sí puede seguir como estaba */}
-    <QueryProvider>
-      <ClerkProvider client:load>
-        <MainHeader lang={lang} />
-        <main>
-          <slot />
-        </main>
-      </ClerkProvider>
-    </QueryProvider>
-  </ThemeProvider>
+    <ThemeProvider>
+      <QueryProvider>
+        <ClerkProvider client:load>
+          <MainHeader lang={lang} />
+          <main>
+            <slot />
+          </main>
+        </ClerkProvider>
+      </QueryProvider>
+    </ThemeProvider>
   </body>
 </html>
