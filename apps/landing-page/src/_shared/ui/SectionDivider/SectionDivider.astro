@@ -1,0 +1,103 @@
+---
+// _shared/ui/SectionDivider/SectionDivider.astro
+---
+
+<div class="section-divider-wrapper">
+  <div class="divider-line"></div>
+  <div class="divider-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L12 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M8 6L12 2L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 18L12 22L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .section-divider-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2.5rem 1.5rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--accent-color, #00AEEF) 20%,
+      var(--accent-color, #00AEEF) 80%,
+      transparent
+    );
+    opacity: 0.4;
+    max-width: 120px;
+  }
+
+  .divider-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-color, #FFFFFF);
+    border: 1px solid var(--border-color, #ebebeb);
+    color: var(--accent-color, #00AEEF);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .divider-icon:hover {
+    transform: scale(1.1) rotate(90deg);
+    border-color: var(--accent-color, #00AEEF);
+    box-shadow: 0 0 30px rgba(0, 174, 239, 0.15);
+  }
+
+  /* Dark mode support via CSS variables */
+  :global(.dark) .divider-icon {
+    background: #121735;
+    border-color: #1a1a3a;
+    color: #4A9EFF;
+  }
+
+  :global(.dark) .divider-icon:hover {
+    border-color: #4A9EFF;
+    box-shadow: 0 0 30px rgba(74, 158, 255, 0.2);
+  }
+
+  :global(.dark) .divider-line {
+    background: linear-gradient(
+      to right,
+      transparent,
+      #4A9EFF 20%,
+      #4A9EFF 80%,
+      transparent
+    );
+  }
+
+  @media (min-width: 640px) {
+    .divider-line {
+      max-width: 200px;
+    }
+    .divider-icon {
+      width: 56px;
+      height: 56px;
+    }
+    .section-divider-wrapper {
+      padding: 3rem 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .divider-line {
+      max-width: 280px;
+    }
+    .section-divider-wrapper {
+      padding: 4rem 2rem;
+    }
+  }
+</style>
