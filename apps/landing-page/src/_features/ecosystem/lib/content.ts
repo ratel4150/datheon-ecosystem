@@ -1,20 +1,20 @@
 // _features/ecosystem/lib/content.ts
 import type { Lang } from '@/_shared/types/i18n';
 
-export const content: Record
-  Lang,
-  {
-    kicker: string;
-    kickerSub: string;
-    title: string;
-    subtitle: string;
-    cta: string;
-    connectsWith: string;
-    panelLabel: string;
-    nodesWord: string;
-    connectionsWord: string;
-  }
-> = {
+export type EcosystemContent = {
+  kicker: string;
+  kickerSub: string;
+  title: string;
+  subtitle: string;
+  cta: string;
+  connectsWith: string;
+  panelLabel: string;
+  nodesWord: string;
+  connectionsWord: string;
+  emptyHint: string;
+};
+
+export const content: Record<Lang, EcosystemContent> = {
   es: {
     kicker: 'TECHNOLOGY ECOSYSTEM',
     kickerSub: 'AI ENGINEERING PLATFORM',
@@ -25,6 +25,7 @@ export const content: Record
     panelLabel: 'MAPA DEL ECOSISTEMA',
     nodesWord: 'nodos',
     connectionsWord: 'conexiones',
+    emptyHint: 'Arrastra o selecciona un nodo para ver sus conexiones',
   },
   en: {
     kicker: 'TECHNOLOGY ECOSYSTEM',
@@ -36,6 +37,7 @@ export const content: Record
     panelLabel: 'ECOSYSTEM MAP',
     nodesWord: 'nodes',
     connectionsWord: 'connections',
+    emptyHint: 'Drag or select a node to see its connections',
   },
   fr: {
     kicker: 'TECHNOLOGY ECOSYSTEM',
@@ -47,5 +49,6 @@ export const content: Record
     panelLabel: "CARTE DE L'ÉCOSYSTÈME",
     nodesWord: 'nœuds',
     connectionsWord: 'connexions',
+    emptyHint: 'Faites glisser ou sélectionnez un nœud pour voir ses connexions',
   },
 };

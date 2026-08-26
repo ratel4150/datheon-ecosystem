@@ -37,6 +37,17 @@ export const EDGES: EdgeData[] = [
   { source: 'software', target: 'agents' },
 ];
 
+export const NODE_RADIUS: Record<NodeId, number> = {
+  core: 32,
+  software: 18,
+  ai: 18,
+  data: 18,
+  cloud: 18,
+  edge: 18,
+  iot: 18,
+  agents: 18,
+};
+
 /** Nombres de los nodos conectados a nodeId (excluyendo 'core'). */
 export function connectedLabels(nodeId: NodeId, edges: EdgeData[], nodes: NodeData[]): string[] {
   const ids = new Set<NodeId>();
