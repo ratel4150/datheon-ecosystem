@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/technology-ecosystem/ui/IntegrationImage.tsx
 'use client';
 
 import { Box, Typography } from '@mui/material';

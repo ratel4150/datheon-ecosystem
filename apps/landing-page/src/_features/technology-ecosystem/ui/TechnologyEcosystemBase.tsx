@@ -1,4 +1,4 @@
-// File: apps/landing-page/src/_features/technology-ecosystem/ui/TechnologyEcosystem.tsx
+// File: apps/landing-page/src/_features/technology-ecosystem/ui/TechnologyEcosystemBase.tsx
 'use client';
 
 import { Box, Typography, Container, alpha, GlobalStyles } from '@mui/material';

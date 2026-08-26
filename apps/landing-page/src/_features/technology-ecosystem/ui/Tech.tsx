@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/technology-ecosystem/ui/Tech.tsx
 'use client';
 
 import { useState } from 'react';

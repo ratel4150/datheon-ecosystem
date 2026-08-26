@@ -14,7 +14,9 @@ export function TechnologyEcosystemResponsive({ lang }: TechnologyEcosystemRespo
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
-  // La sección es inherentemente responsive con sus propios breakpoints.
-  // Simplemente pasamos el lang, y el componente interno maneja todo.
-  return <TechnologyEcosystem lang={lang} />;
+  let variant: 'desktop' | 'tablet' | 'mobile' = 'desktop';
+  if (isMobile) variant = 'mobile';
+  else if (isTablet) variant = 'tablet';
+
+  return <TechnologyEcosystem lang={lang} variant={variant} />;
 }

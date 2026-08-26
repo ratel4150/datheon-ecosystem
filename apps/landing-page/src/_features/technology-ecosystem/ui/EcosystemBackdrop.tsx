@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/technology-ecosystem/ui/EcosystemBackdrop.tsx
 'use client';
 
 import { Box, alpha } from '@mui/material';

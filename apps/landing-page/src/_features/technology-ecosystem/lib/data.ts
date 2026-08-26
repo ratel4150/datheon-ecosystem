@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/technology-ecosystem/lib/data.ts
 // _features/technology-ecosystem/lib/data.ts
 type TechItem = { name: string; tag?: string; blurb?: string };
 type Category = { id: string; label: string; items: TechItem[] };
