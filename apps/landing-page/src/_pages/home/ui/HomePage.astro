@@ -1,11 +1,9 @@
 ---
-// _pages/home/ui/HomePage.astro
 import { Hero } from '@/_features/hero';
-import { TechnologyEcosystem } from '@/_features/technology-ecosystem';
-import type { Translations } from '@/_shared/types/i18n';
-import type { Lang } from '@/_shared/types/navigation';
-import { SectionDivider } from '@/_shared/ui/SectionDivider';
-import { SystemArchitecture } from '@/_features/system-architecture';
+import { Ecosystem } from '@/_features/ecosystem';
+import { SectionDivider } from '@/_shared/ui';
+import type { Translations, Lang } from '@/_shared/types/i18n';
+
 export interface Props {
   lang: Lang;
   t: Translations;
@@ -16,8 +14,6 @@ const { lang, t } = Astro.props;
 
 <main>
   <Hero lang={lang} client:load />
-    <SectionDivider client:load />
-  <TechnologyEcosystem lang={lang} client:load />
-   <SectionDivider client:load />
-     <SystemArchitecture lang={lang} client:load />
+  <Ecosystem lang={lang} client:load />
+  <SectionDivider client:load />
 </main>
