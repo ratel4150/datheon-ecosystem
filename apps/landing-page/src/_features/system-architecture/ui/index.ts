@@ -1,0 +1,1 @@
+export { SystemArchitectureResponsive } from './SystemArchitectureResponsive';
