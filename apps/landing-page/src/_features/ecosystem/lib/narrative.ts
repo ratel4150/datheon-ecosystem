@@ -1,6 +1,8 @@
 // _features/ecosystem/lib/narrative.ts
 import type { EdgeData, NodeData, NodeId } from './graph';
 
+/** Profundidad BFS de cada nodo respecto a rootId — determina en qué
+ *  "ola" de la secuencia narrativa aparece cada card. */
 export function computeNarrative(nodes: NodeData[], edges: EdgeData[], rootId: NodeId): Map<NodeId, number> {
   const adjacency = new Map<NodeId, NodeId[]>();
   nodes.forEach((n) => adjacency.set(n.id, []));

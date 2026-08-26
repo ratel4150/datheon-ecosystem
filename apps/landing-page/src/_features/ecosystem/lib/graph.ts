@@ -37,8 +37,7 @@ export const EDGES: EdgeData[] = [
   { source: 'software', target: 'agents' },
 ];
 
-/** Nombres de los nodos conectados a nodeId (excluyendo 'core'). Esto
- *  reemplaza a las líneas del grafo: la conexión se lee, no se dibuja. */
+/** Nombres de los nodos conectados a nodeId (excluyendo 'core'). */
 export function connectedLabels(nodeId: NodeId, edges: EdgeData[], nodes: NodeData[]): string[] {
   const ids = new Set<NodeId>();
   edges.forEach((e) => {

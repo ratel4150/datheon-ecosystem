@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Avatar, Typography, Chip } from '@mui/material';
+import { Card, Avatar, Typography, Chip, GlobalStyles } from '@mui/material';
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiCpu } from 'react-icons/fi';
 import { MONO } from '../lib';
@@ -12,6 +12,7 @@ interface EcosystemCoreCardProps {
   glow: string;
   surface: string;
   text: string;
+  isDark: boolean;
   delay?: number;
 }
 
@@ -20,7 +21,7 @@ const cardVariants = {
   visible: (delay: number) => ({ opacity: 1, y: 0, scale: 1, transition: { delay, duration: 0.5, ease: 'easeOut' } }),
 };
 
-export function EcosystemCoreCard({ accent, accentDk, accentBg, glow, surface, text, delay = 0.1 }: EcosystemCoreCardProps) {
+export function EcosystemCoreCard({ accent, accentDk, accentBg, glow, surface, text, isDark, delay = 0.1 }: EcosystemCoreCardProps) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -35,8 +36,7 @@ export function EcosystemCoreCard({ accent, accentDk, accentBg, glow, surface, t
       sx={{
         bgcolor: surface,
         border: `2px solid ${accent}`,
-        borderRadius: '18px',
-        boxShadow: `0 0 50px ${glow}`,
+        borderRadius: '16px',
         textAlign: 'center',
         py: { xs: 3, md: 3.5 },
         px: 2,
@@ -44,7 +44,17 @@ export function EcosystemCoreCard({ accent, accentDk, accentBg, glow, surface, t
         transition: 'background-color 0.3s ease, border-color 0.3s ease',
       }}
     >
-      <Avatar sx={{ bgcolor: accentDk, width: 56, height: 56, mx: 'auto', mb: 1.5 }}>
+      <GlobalStyles
+        styles={{
+          '.eco-core-glow': { animation: 'ecoCoreGlow 3.6s ease-in-out infinite' },
+          '@keyframes ecoCoreGlow': {
+            '0%, 100%': { boxShadow: `0 0 40px ${glow}` },
+            '50%': { boxShadow: `0 0 56px ${glow}` },
+          },
+          '@media (prefers-reduced-motion: reduce)': { '.eco-core-glow': { animation: 'none', boxShadow: `0 0 40px ${glow}` } },
+        }}
+      />
+      <Avatar className="eco-core-glow" sx={{ bgcolor: accentDk, width: 56, height: 56, mx: 'auto', mb: 1.5 }}>
         <FiCpu size={26} color="#FFFFFF" />
       </Avatar>
       <Typography sx={{ fontFamily: MONO, fontWeight: 800, fontSize: '1.15rem', letterSpacing: '0.1em', color: text, transition: 'color 0.3s ease' }}>

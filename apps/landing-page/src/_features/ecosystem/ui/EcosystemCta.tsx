@@ -1,14 +1,14 @@
 'use client';
 
-import { Box } from '@mui/material';
+import { Button, alpha } from '@mui/material';
 import { motion } from 'framer-motion';
-import { MONO } from '../lib';
+import { FiArrowRight } from 'react-icons/fi';
 import { trackCtaClicked } from '../model';
 
 interface EcosystemCtaProps {
   label: string;
   accentColor: string;
-  accentBg: string;
+  accentDkColor: string;
   delay?: number;
 }
 
@@ -17,45 +17,36 @@ const ctaVariants = {
   visible: (delay: number) => ({ opacity: 1, y: 0, transition: { delay, duration: 0.5, ease: 'easeOut' } }),
 };
 
-export function EcosystemCta({ label, accentColor, accentBg, delay = 0.4 }: EcosystemCtaProps) {
+export function EcosystemCta({ label, accentColor, accentDkColor, delay = 0.4 }: EcosystemCtaProps) {
   return (
-    <Box
+    <Button
+      variant="contained"
+      size="large"
+      onClick={trackCtaClicked}
       component={motion.button}
-      type="button"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.8 }}
       custom={delay}
       variants={ctaVariants}
       whileHover={{ y: -1 }}
-      whileTap={{ scale: 0.97 }}
-      onClick={trackCtaClicked}
-      className="eco-focus"
+      whileTap={{ scale: 0.98 }}
+      endIcon={<FiArrowRight size={15} />}
       sx={{
-        appearance: 'none',
-        border: 'none',
-        bgcolor: 'transparent',
-        cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 0.8,
-        mx: 'auto',
-        mt: 1,
-        px: 2,
-        py: 1,
-        borderRadius: '8px',
-        fontFamily: MONO,
-        fontSize: '0.85rem',
-        fontWeight: 600,
-        color: accentColor,
-        transition: 'background-color 0.2s ease, color 0.3s ease',
-        '&:hover': { bgcolor: accentBg },
+        bgcolor: accentColor,
+        color: '#fff',
+        fontWeight: 700,
+        fontSize: '0.93rem',
+        px: 3.5,
+        py: 1.4,
+        borderRadius: '12px',
+        textTransform: 'none',
+        boxShadow: `0 4px 20px ${alpha(accentColor, 0.35)}`,
+        transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
+        '&:hover': { bgcolor: accentDkColor, boxShadow: `0 8px 28px ${alpha(accentColor, 0.45)}` },
       }}
     >
       {label}
-      <Box component="span" sx={{ fontSize: '1.1rem' }}>
-        →
-      </Box>
-    </Box>
+    </Button>
   );
 }

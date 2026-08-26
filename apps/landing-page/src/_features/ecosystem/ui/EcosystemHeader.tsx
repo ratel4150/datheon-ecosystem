@@ -6,6 +6,7 @@ import { DISPLAY, MONO } from '../lib';
 
 interface EcosystemHeaderProps {
   kicker: string;
+  kickerSub?: string;
   title: string;
   subtitle: string;
   textColor: string;
@@ -20,7 +21,17 @@ const lineVariants = {
   visible: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut', delay } }),
 };
 
-export function EcosystemHeader({ kicker, title, subtitle, textColor, textMuteColor, accentColor, glow, entranceDelay = 0 }: EcosystemHeaderProps) {
+export function EcosystemHeader({
+  kicker,
+  kickerSub,
+  title,
+  subtitle,
+  textColor,
+  textMuteColor,
+  accentColor,
+  glow,
+  entranceDelay = 0,
+}: EcosystemHeaderProps) {
   const prefersReducedMotion = useReducedMotion();
   const step = prefersReducedMotion ? 0 : 0.15;
   const baseDelay = prefersReducedMotion ? 0 : entranceDelay;
@@ -28,9 +39,14 @@ export function EcosystemHeader({ kicker, title, subtitle, textColor, textMuteCo
   return (
     <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
       <Box component={motion.div} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }} custom={baseDelay} variants={lineVariants}>
-        <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.16em', color: accentColor, mb: 1.5, transition: 'color 0.3s ease' }}>
+        <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.76rem', letterSpacing: '0.16em', color: accentColor, mb: kickerSub ? 0.5 : 1.5, transition: 'color 0.3s ease' }}>
           {kicker}
         </Typography>
+        {kickerSub && (
+          <Typography sx={{ fontFamily: MONO, fontWeight: 500, fontSize: '0.64rem', letterSpacing: '0.13em', color: textMuteColor, mb: 1.5, transition: 'color 0.3s ease' }}>
+            {kickerSub}
+          </Typography>
+        )}
       </Box>
       <Box component={motion.div} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }} custom={baseDelay + step} variants={lineVariants}>
         <Typography
