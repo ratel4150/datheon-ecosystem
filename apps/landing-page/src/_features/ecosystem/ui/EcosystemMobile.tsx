@@ -1,49 +1,103 @@
 'use client';
-import { Box, Container, Typography, Accordion, AccordionSummary, AccordionDetails, alpha } from '@mui/material';
+
+import { Box, Container, Accordion, AccordionSummary, AccordionDetails, GlobalStyles, alpha } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import { motion } from 'framer-motion';
-import { C, DISPLAY, MONO } from '../lib/constants';
-import { content } from '../lib/content';
-import { NODES } from '../lib/graph';
+import { C, DARK, MONO, content, resolveLang, NODES } from '../lib';
+import { useTheme } from '@/_shared/lib/theme';
 import { EcosystemBackdrop } from './EcosystemBackdrop';
+import { EcosystemHeader } from './EcosystemHeader';
+import { EcosystemCta } from './EcosystemCta';
 import type { Lang } from '@/_shared/types/i18n';
-interface Props { lang: Lang; }
+
+interface Props {
+  lang: Lang;
+}
+
 export function EcosystemMobile({ lang }: Props) {
-  const l = (lang as keyof typeof content) in content ? (lang as keyof typeof content) : 'es';
+  const l = resolveLang(lang, content);
   const t = content[l];
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const T = isDark ? DARK : C;
+
   return (
-    <Box component="section" sx={{ position: 'relative', minHeight: '100vh', bgcolor: C.bg, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', py: { xs: 4, md: 6 } }}>
-      <EcosystemBackdrop />
+    <Box
+      component="section"
+      sx={{
+        position: 'relative',
+        minHeight: '100vh',
+        bgcolor: T.bg,
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        py: { xs: 4, md: 6 },
+        transition: 'background-color 0.3s ease',
+      }}
+    >
+      <GlobalStyles styles={{ '.eco-focus:focus-visible': { outline: `2px solid ${T.accent}`, outlineOffset: 3 } }} />
+      <EcosystemBackdrop accent={T.accent} />
+
       <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1 }}>
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.16em', color: C.accent, mb: 1.5 }}>{t.kicker}</Typography>
-          <Typography sx={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: '1.8rem', color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1.1, textShadow: `0 0 60px ${C.glow}` }}>{t.title}</Typography>
-          <Typography sx={{ fontFamily: MONO, fontSize: '0.8rem', color: C.textMute, mt: 2, letterSpacing: '0.04em' }}>{t.subtitle}</Typography>
-        </Box>
+        <EcosystemHeader
+          kicker={t.kicker}
+          title={t.title}
+          subtitle={t.subtitle}
+          textColor={T.text}
+          textMuteColor={T.textMute}
+          accentColor={T.accent}
+          glow={T.glow}
+          titleSize={{ xs: '1.8rem', md: '1.8rem' }}
+          mb={{ xs: 4, md: 4 }}
+        />
+
         <Box>
-          {NODES.filter(n => n.id !== 'core').map((node) => (
-            <Accordion key={node.id} sx={{ bgcolor: 'transparent', color: C.text, boxShadow: 'none', borderBottom: `1px solid ${C.border}`, '&:before': { display: 'none' } }}>
-              <AccordionSummary expandIcon={<ExpandMore sx={{ color: C.accent }} />} sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.04em' }}>{node.label}</AccordionSummary>
+          {NODES.filter((n) => n.id !== 'core').map((node) => (
+            <Accordion
+              key={node.id}
+              sx={{
+                bgcolor: 'transparent',
+                color: T.text,
+                boxShadow: 'none',
+                borderBottom: `1px solid ${T.border}`,
+                '&:before': { display: 'none' },
+                transition: 'color 0.3s ease, border-color 0.3s ease',
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMore sx={{ color: T.accent }} />}
+                className="eco-focus"
+                sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.04em' }}
+              >
+                {node.label}
+              </AccordionSummary>
               <AccordionDetails>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   {node.metadata.map((item) => (
-                    <Box key={item} sx={{ px: 1.5, py: 0.5, borderRadius: '20px', bgcolor: alpha(C.accent, 0.1), border: `1px solid ${C.accentLine}`, fontFamily: MONO, fontSize: '0.65rem', color: C.textMute }}>{item}</Box>
+                    <Box
+                      key={item}
+                      sx={{
+                        px: 1.5,
+                        py: 0.5,
+                        borderRadius: '20px',
+                        bgcolor: alpha(T.accent, 0.1),
+                        border: `1px solid ${T.accentLine}`,
+                        fontFamily: MONO,
+                        fontSize: '0.65rem',
+                        color: T.textMute,
+                      }}
+                    >
+                      {item}
+                    </Box>
                   ))}
                 </Box>
               </AccordionDetails>
             </Accordion>
           ))}
         </Box>
+
         <Box sx={{ textAlign: 'center', mt: 4 }}>
-          <motion.button
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-            onClick={() => { if (window.gtag) window.gtag('event', 'ecosystem_cta_clicked'); }}
-            style={{ appearance: 'none', border: 'none', background: 'transparent', color: C.accent, fontFamily: MONO, fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 0.8, padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s ease' }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(74,158,255,0.08)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-          >
-            {t.cta} <span style={{ fontSize: '1.1rem' }}>→</span>
-          </motion.button>
+          <EcosystemCta label={t.cta} accentColor={T.accent} accentBg={T.accentBg} delay={0.3} />
         </Box>
       </Container>
     </Box>
