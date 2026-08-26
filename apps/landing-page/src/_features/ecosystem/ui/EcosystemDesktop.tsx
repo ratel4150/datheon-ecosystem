@@ -1,9 +1,10 @@
 'use client';
 
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Container, Typography, GlobalStyles, alpha } from '@mui/material';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useTheme } from '@/_shared/lib/theme';
-import { C, DARK, MONO, content, resolveLang, NODES, EDGES, type NodeId } from '../lib';
+import { C, DARK, MONO, content, resolveLang, NODES, EDGES, computeNarrative, edgeDepth, type NodeId, type EdgeData } from '../lib';
 import { useEcosystem } from '../model';
 import { EcosystemBackdrop } from './EcosystemBackdrop';
 import { EcosystemHeader } from './EcosystemHeader';
@@ -14,6 +15,9 @@ interface Props {
   lang: Lang;
 }
 
+const CORE_DELAY = 0.15;
+const DEPTH_STEP = 0.45;
+
 export function EcosystemDesktop({ lang }: Props) {
   const l = resolveLang(lang, content);
   const t = content[l];
@@ -23,14 +27,31 @@ export function EcosystemDesktop({ lang }: Props) {
   const prefersReducedMotion = useReducedMotion();
 
   const { hoveredNode, selectedNode, hoverNode, selectNode } = useEcosystem<NodeId>();
-
+  const toggleSelect = (id: NodeId) => selectNode(selectedNode === id ? null : id);
   const isActive = (id: NodeId) => hoveredNode === id || selectedNode === id;
   const isDimmed = (id: NodeId) => !!hoveredNode && hoveredNode !== id && selectedNode !== id;
 
-  const toggleSelect = (id: NodeId) => selectNode(selectedNode === id ? null : id);
+  // --- Secuencia narrativa: profundidad real del grafo, no un índice de array
+  const depthMap = useMemo(() => computeNarrative(NODES, EDGES, 'core'), []);
+  const maxDepth = useMemo(() => Math.max(0, ...Array.from(depthMap.values())), [depthMap]);
+  const nodeDelay = (id: NodeId) => CORE_DELAY + (depthMap.get(id) ?? 0) * DEPTH_STEP;
+  const edgeDelayFor = (edge: EdgeData) => Math.max(0, CORE_DELAY + edgeDepth(edge, depthMap) * DEPTH_STEP - 0.18);
+  const totalNarrativeDuration = CORE_DELAY + (maxDepth + 1) * DEPTH_STEP + 0.25;
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const [graphRevealed, setGraphRevealed] = useState(false);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const ms = prefersReducedMotion ? 0 : totalNarrativeDuration * 1000;
+    const timer = setTimeout(() => setGraphRevealed(true), ms);
+    return () => clearTimeout(timer);
+  }, [isInView, totalNarrativeDuration, prefersReducedMotion]);
 
   return (
     <Box
+      ref={sectionRef}
       component="section"
       sx={{
         position: 'relative',
@@ -67,20 +88,28 @@ export function EcosystemDesktop({ lang }: Props) {
               if (!source || !target) return null;
               const active = isActive(source.id) || isActive(target.id);
               const dimmed = isDimmed(source.id) || isDimmed(target.id);
-              const opacity = active ? 0.7 : dimmed ? 0.1 : 0.2;
+              const opacityTarget = active ? 0.7 : dimmed ? 0.1 : 0.2;
               const stroke = active ? T.accent : T.border;
               const dx = target.x - source.x;
               const dy = target.y - source.y;
               const mx = (source.x + target.x) / 2 + dy * 0.04;
               const my = (source.y + target.y) / 2 - dx * 0.04;
               const d = `M ${source.x} ${source.y} Q ${mx} ${my} ${target.x} ${target.y}`;
+              const delay = prefersReducedMotion ? 0 : edgeDelayFor(edge);
+
               return (
                 <motion.path
                   key={`${edge.source}-${edge.target}`}
                   d={d}
-                  initial={prefersReducedMotion ? false : { pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity }}
-                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeOut', delay: 0.2 }}
+                  animate={{ pathLength: isInView ? 1 : 0, opacity: isInView ? opacityTarget : 0 }}
+                  transition={
+                    !graphRevealed
+                      ? {
+                          pathLength: { delay, duration: prefersReducedMotion ? 0 : 0.7, ease: 'easeOut' },
+                          opacity: { delay, duration: prefersReducedMotion ? 0 : 0.4 },
+                        }
+                      : { pathLength: { duration: 0 }, opacity: { duration: 0.3 } }
+                  }
                   stroke={stroke}
                   strokeWidth={active ? 1.8 : 0.8}
                   fill="none"
@@ -90,12 +119,14 @@ export function EcosystemDesktop({ lang }: Props) {
             })}
           </svg>
 
-          {NODES.map((node, i) => {
+          {NODES.map((node) => {
             const active = isActive(node.id);
             const dimmed = isDimmed(node.id);
             const isCore = node.id === 'core';
-            const scale = active ? 1.15 : dimmed ? 0.8 : 1;
-            const opacity = active ? 1 : dimmed ? 0.2 : 0.6;
+            const scaleTarget = active ? 1.15 : dimmed ? 0.8 : 1;
+            const opacityTarget = active ? 1 : dimmed ? 0.2 : 0.6;
+            const delay = prefersReducedMotion ? 0 : nodeDelay(node.id);
+
             return (
               <Box
                 key={node.id}
@@ -105,12 +136,11 @@ export function EcosystemDesktop({ lang }: Props) {
                 aria-label={node.label}
                 aria-pressed={selectedNode === node.id}
                 className="eco-node-focus"
-                initial={prefersReducedMotion ? false : { scale: 0, opacity: 0 }}
-                animate={{ scale, opacity }}
+                animate={{ scale: isInView ? scaleTarget : 0, opacity: isInView ? opacityTarget : 0 }}
                 transition={
-                  prefersReducedMotion
-                    ? { duration: 0 }
-                    : { delay: i * 0.08, type: 'spring', stiffness: 200, damping: 20 }
+                  !graphRevealed
+                    ? { delay, type: 'spring', stiffness: 200, damping: 20 }
+                    : { duration: 0.25, ease: 'easeOut' }
                 }
                 onMouseEnter={() => hoverNode(node.id)}
                 onMouseLeave={() => hoverNode(null)}
@@ -206,9 +236,10 @@ export function EcosystemDesktop({ lang }: Props) {
             titleSize={{ xs: '2rem', md: '3.5rem' }}
             maxWidth={600}
             mb={{ xs: 0, md: 0 }}
+            entranceDelay={totalNarrativeDuration}
           />
           <Box sx={{ textAlign: 'center' }}>
-            <EcosystemCta label={t.cta} accentColor={T.accent} accentBg={T.accentBg} />
+            <EcosystemCta label={t.cta} accentColor={T.accent} accentBg={T.accentBg} delay={totalNarrativeDuration + 0.5} />
           </Box>
         </Box>
       </Container>

@@ -12,14 +12,21 @@ interface EcosystemCtaProps {
   delay?: number;
 }
 
+const ctaVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (delay: number) => ({ opacity: 1, y: 0, transition: { delay, duration: 0.5, ease: 'easeOut' } }),
+};
+
 export function EcosystemCta({ label, accentColor, accentBg, delay = 0.4 }: EcosystemCtaProps) {
   return (
     <Box
       component={motion.button}
       type="button"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.8 }}
+      custom={delay}
+      variants={ctaVariants}
       whileHover={{ y: -1 }}
       whileTap={{ scale: 0.97 }}
       onClick={trackCtaClicked}

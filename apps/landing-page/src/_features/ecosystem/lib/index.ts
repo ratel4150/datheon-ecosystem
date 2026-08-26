@@ -4,3 +4,4 @@ export { content } from './content';
 export { resolveLang } from './resolveLang';
 export { NODES, EDGES } from './graph';
 export type { NodeData, EdgeData, NodeId } from './graph';
+export { computeNarrative, edgeDepth } from './narrative';

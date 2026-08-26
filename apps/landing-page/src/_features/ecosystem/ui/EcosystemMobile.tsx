@@ -2,6 +2,7 @@
 
 import { Box, Container, Accordion, AccordionSummary, AccordionDetails, GlobalStyles, alpha } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
+import { motion, useReducedMotion } from 'framer-motion';
 import { C, DARK, MONO, content, resolveLang, NODES } from '../lib';
 import { useTheme } from '@/_shared/lib/theme';
 import { EcosystemBackdrop } from './EcosystemBackdrop';
@@ -13,12 +14,23 @@ interface Props {
   lang: Lang;
 }
 
+const listVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -12 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: 'easeOut' } },
+};
+
 export function EcosystemMobile({ lang }: Props) {
   const l = resolveLang(lang, content);
   const t = content[l];
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const T = isDark ? DARK : C;
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <Box
@@ -51,48 +63,55 @@ export function EcosystemMobile({ lang }: Props) {
           mb={{ xs: 4, md: 4 }}
         />
 
-        <Box>
+        <Box
+          component={motion.div}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={prefersReducedMotion ? undefined : listVariants}
+        >
           {NODES.filter((n) => n.id !== 'core').map((node) => (
-            <Accordion
-              key={node.id}
-              sx={{
-                bgcolor: 'transparent',
-                color: T.text,
-                boxShadow: 'none',
-                borderBottom: `1px solid ${T.border}`,
-                '&:before': { display: 'none' },
-                transition: 'color 0.3s ease, border-color 0.3s ease',
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMore sx={{ color: T.accent }} />}
-                className="eco-focus"
-                sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.04em' }}
+            <Box key={node.id} component={motion.div} variants={prefersReducedMotion ? undefined : itemVariants}>
+              <Accordion
+                sx={{
+                  bgcolor: 'transparent',
+                  color: T.text,
+                  boxShadow: 'none',
+                  borderBottom: `1px solid ${T.border}`,
+                  '&:before': { display: 'none' },
+                  transition: 'color 0.3s ease, border-color 0.3s ease',
+                }}
               >
-                {node.label}
-              </AccordionSummary>
-              <AccordionDetails>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                  {node.metadata.map((item) => (
-                    <Box
-                      key={item}
-                      sx={{
-                        px: 1.5,
-                        py: 0.5,
-                        borderRadius: '20px',
-                        bgcolor: alpha(T.accent, 0.1),
-                        border: `1px solid ${T.accentLine}`,
-                        fontFamily: MONO,
-                        fontSize: '0.65rem',
-                        color: T.textMute,
-                      }}
-                    >
-                      {item}
-                    </Box>
-                  ))}
-                </Box>
-              </AccordionDetails>
-            </Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMore sx={{ color: T.accent }} />}
+                  className="eco-focus"
+                  sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.04em' }}
+                >
+                  {node.label}
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {node.metadata.map((item) => (
+                      <Box
+                        key={item}
+                        sx={{
+                          px: 1.5,
+                          py: 0.5,
+                          borderRadius: '20px',
+                          bgcolor: alpha(T.accent, 0.1),
+                          border: `1px solid ${T.accentLine}`,
+                          fontFamily: MONO,
+                          fontSize: '0.65rem',
+                          color: T.textMute,
+                        }}
+                      >
+                        {item}
+                      </Box>
+                    ))}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
           ))}
         </Box>
 

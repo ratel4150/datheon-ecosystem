@@ -1,0 +1,39 @@
+// _features/ecosystem/lib/narrative.ts
+import type { EdgeData, NodeData, NodeId } from './graph';
+
+/** Profundidad BFS de cada nodo respecto a rootId — cuántos saltos hay
+ *  que dar desde el centro para llegar a él. Determina en qué "ola" de
+ *  la secuencia narrativa aparece. */
+export function computeNarrative(nodes: NodeData[], edges: EdgeData[], rootId: NodeId): Map<NodeId, number> {
+  const adjacency = new Map<NodeId, NodeId[]>();
+  nodes.forEach((n) => adjacency.set(n.id, []));
+  edges.forEach((e) => {
+    adjacency.get(e.source)?.push(e.target);
+    adjacency.get(e.target)?.push(e.source);
+  });
+
+  const depth = new Map<NodeId, number>();
+  const queue: NodeId[] = [rootId];
+  depth.set(rootId, 0);
+
+  while (queue.length) {
+    const current = queue.shift() as NodeId;
+    for (const neighbor of adjacency.get(current) ?? []) {
+      if (!depth.has(neighbor)) {
+        depth.set(neighbor, (depth.get(current) ?? 0) + 1);
+        queue.push(neighbor);
+      }
+    }
+  }
+
+  return depth;
+}
+
+/** Profundidad de una arista = la del extremo más lejano del centro.
+ *  Así una arista siempre se dibuja en la misma ola en que aparece el
+ *  nodo que conecta hacia afuera. */
+export function edgeDepth(edge: EdgeData, depth: Map<NodeId, number>): number {
+  const a = depth.get(edge.source) ?? 0;
+  const b = depth.get(edge.target) ?? 0;
+  return Math.max(a, b);
+}

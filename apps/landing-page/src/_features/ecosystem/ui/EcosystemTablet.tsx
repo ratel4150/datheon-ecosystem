@@ -14,6 +14,16 @@ interface Props {
   lang: Lang;
 }
 
+const gridContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const gridItemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
+
 export function EcosystemTablet({ lang }: Props) {
   const l = resolveLang(lang, content);
   const t = content[l];
@@ -54,7 +64,16 @@ export function EcosystemTablet({ lang }: Props) {
           glow={T.glow}
         />
 
-        <Grid container spacing={3} justifyContent="center">
+        <Grid
+          component={motion.div}
+          container
+          spacing={3}
+          justifyContent="center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={prefersReducedMotion ? undefined : gridContainerVariants}
+        >
           {NODES.filter((n) => n.id !== 'core').map((node) => {
             const isHovered = hoveredNode === node.id;
             const isSelected = selectedNode === node.id;
@@ -63,6 +82,7 @@ export function EcosystemTablet({ lang }: Props) {
               <Grid item xs={6} sm={4} key={node.id}>
                 <Box
                   component={motion.div}
+                  variants={prefersReducedMotion ? undefined : gridItemVariants}
                   role="button"
                   tabIndex={0}
                   aria-label={node.label}
