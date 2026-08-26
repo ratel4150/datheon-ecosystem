@@ -1,6 +1,7 @@
 // _features/ecosystem/lib/constants.ts
 export const C = {
   bg: '#F8F9FE',
+  surface: '#FFFFFF',
   text: '#0B0F2B',
   textMid: '#4B5568',
   textMute: '#8891A6',
@@ -10,11 +11,11 @@ export const C = {
   accentLine: 'rgba(0, 119, 182, 0.2)',
   border: '#E2E5F0',
   glow: 'rgba(0, 119, 182, 0.12)',
-  glowStrong: 'rgba(0, 119, 182, 0.28)',
 } as const;
 
 export const DARK = {
   bg: '#0B0F2B',
+  surface: '#11162E',
   text: '#F5F5F5',
   textMid: '#A0A0B8',
   textMute: '#6B7280',
@@ -24,7 +25,6 @@ export const DARK = {
   accentLine: 'rgba(74, 158, 255, 0.25)',
   border: '#1E1E3A',
   glow: 'rgba(74, 158, 255, 0.15)',
-  glowStrong: 'rgba(74, 158, 255, 0.35)',
 } as const;
 
 export const DISPLAY = 'Poppins, sans-serif';

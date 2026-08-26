@@ -1,1 +1,1 @@
-export { EcosystemResponsive as Ecosystem } from './ui';
+export { Ecosystem } from './ui';

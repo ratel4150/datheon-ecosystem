@@ -2,6 +2,6 @@
 export { C, DARK, MONO, DISPLAY } from './constants';
 export { content } from './content';
 export { resolveLang } from './resolveLang';
-export { NODES, EDGES } from './graph';
+export { NODES, EDGES, connectedLabels } from './graph';
 export type { NodeData, EdgeData, NodeId } from './graph';
-export { computeNarrative, edgeDepth } from './narrative';
+export { computeNarrative } from './narrative';

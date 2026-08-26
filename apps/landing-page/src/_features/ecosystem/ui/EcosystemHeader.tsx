@@ -12,9 +12,6 @@ interface EcosystemHeaderProps {
   textMuteColor: string;
   accentColor: string;
   glow: string;
-  titleSize?: { xs: string; md: string };
-  maxWidth?: number;
-  mb?: { xs: number; md: number };
   entranceDelay?: number;
 }
 
@@ -23,25 +20,13 @@ const lineVariants = {
   visible: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut', delay } }),
 };
 
-export function EcosystemHeader({
-  kicker,
-  title,
-  subtitle,
-  textColor,
-  textMuteColor,
-  accentColor,
-  glow,
-  titleSize = { xs: '1.8rem', md: '3rem' },
-  maxWidth = 600,
-  mb = { xs: 4, md: 6 },
-  entranceDelay = 0,
-}: EcosystemHeaderProps) {
+export function EcosystemHeader({ kicker, title, subtitle, textColor, textMuteColor, accentColor, glow, entranceDelay = 0 }: EcosystemHeaderProps) {
   const prefersReducedMotion = useReducedMotion();
   const step = prefersReducedMotion ? 0 : 0.15;
   const baseDelay = prefersReducedMotion ? 0 : entranceDelay;
 
   return (
-    <Box sx={{ textAlign: 'center', mb }}>
+    <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
       <Box component={motion.div} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.6 }} custom={baseDelay} variants={lineVariants}>
         <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.16em', color: accentColor, mb: 1.5, transition: 'color 0.3s ease' }}>
           {kicker}
@@ -52,10 +37,10 @@ export function EcosystemHeader({
           sx={{
             fontFamily: DISPLAY,
             fontWeight: 800,
-            fontSize: titleSize,
+            fontSize: { xs: '1.9rem', md: '2.8rem' },
             color: textColor,
             letterSpacing: '-0.02em',
-            lineHeight: 1.1,
+            lineHeight: 1.15,
             textShadow: `0 0 60px ${glow}`,
             transition: 'color 0.3s ease',
           }}
@@ -67,11 +52,11 @@ export function EcosystemHeader({
         <Typography
           sx={{
             fontFamily: MONO,
-            fontSize: { xs: '0.8rem', md: '0.95rem' },
+            fontSize: { xs: '0.8rem', md: '0.92rem' },
             color: textMuteColor,
             mt: 2,
             letterSpacing: '0.04em',
-            maxWidth,
+            maxWidth: 560,
             mx: 'auto',
             transition: 'color 0.3s ease',
           }}

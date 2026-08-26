@@ -40,7 +40,7 @@ export function EcosystemCta({ label, accentColor, accentBg, delay = 0.4 }: Ecos
         alignItems: 'center',
         gap: 0.8,
         mx: 'auto',
-        mt: 2,
+        mt: 1,
         px: 2,
         py: 1,
         borderRadius: '8px',
