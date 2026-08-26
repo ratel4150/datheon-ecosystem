@@ -15,8 +15,6 @@ interface EcosystemHeaderProps {
   titleSize?: { xs: string; md: string };
   maxWidth?: number;
   mb?: { xs: number; md: number };
-  /** Segundos antes de que arranque este bloque — permite sincronizarlo
-   *  con una secuencia previa (ej. el grafo de EcosystemDesktop). */
   entranceDelay?: number;
 }
 

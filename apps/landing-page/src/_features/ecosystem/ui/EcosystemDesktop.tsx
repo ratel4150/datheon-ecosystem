@@ -31,7 +31,6 @@ export function EcosystemDesktop({ lang }: Props) {
   const isActive = (id: NodeId) => hoveredNode === id || selectedNode === id;
   const isDimmed = (id: NodeId) => !!hoveredNode && hoveredNode !== id && selectedNode !== id;
 
-  // --- Secuencia narrativa: profundidad real del grafo, no un índice de array
   const depthMap = useMemo(() => computeNarrative(NODES, EDGES, 'core'), []);
   const maxDepth = useMemo(() => Math.max(0, ...Array.from(depthMap.values())), [depthMap]);
   const nodeDelay = (id: NodeId) => CORE_DELAY + (depthMap.get(id) ?? 0) * DEPTH_STEP;
