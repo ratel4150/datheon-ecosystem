@@ -20,8 +20,6 @@ export interface PhysicsConfig {
   height: number;
 }
 
-/** Posición inicial: 'core' al centro, satélites en círculo — solo un
- *  punto de partida razonable, la física los reacomoda desde ahí. */
 export function seedPositions(nodes: NodeData[], width: number, height: number): PhysicsPositions {
   const cx = width / 2;
   const cy = height / 2;
@@ -52,7 +50,6 @@ export function stepSimulation(
     forces[id] = { fx: 0, fy: 0 };
   });
 
-  // Repulsión entre todos los pares (como cargas iguales alejándose)
   for (let i = 0; i < ids.length; i++) {
     for (let j = i + 1; j < ids.length; j++) {
       const a = positions[ids[i]];
@@ -72,7 +69,6 @@ export function stepSimulation(
     }
   }
 
-  // Resorte por cada arista — tira hacia la longitud ideal
   edges.forEach((edge) => {
     const s = positions[edge.source];
     const t = positions[edge.target];
@@ -90,7 +86,6 @@ export function stepSimulation(
     forces[edge.target].fy -= fy;
   });
 
-  // Gravedad suave hacia el centro del canvas
   const cx = config.width / 2;
   const cy = config.height / 2;
   ids.forEach((id) => {

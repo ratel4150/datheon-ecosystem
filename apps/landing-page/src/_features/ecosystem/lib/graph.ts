@@ -5,6 +5,8 @@ export interface NodeData {
   id: NodeId;
   label: string;
   metadata: string[];
+  /** URL de una imagen/logo. Si no se define, se usa el ícono de NODE_ICON (ver ui/EcosystemGraphCanvas). */
+  image?: string;
 }
 
 export interface EdgeData {
@@ -46,6 +48,19 @@ export const NODE_RADIUS: Record<NodeId, number> = {
   edge: 18,
   iot: 18,
   agents: 18,
+};
+
+/** Paleta por categoría — independiente del tema claro/oscuro, cada nodo
+ *  tiene su propio color como piezas de un tablero. */
+export const NODE_COLOR: Record<NodeId, string> = {
+  core: '#0077B6',
+  software: '#6C5CE7',
+  ai: '#D6336C',
+  data: '#0CA678',
+  cloud: '#1971C2',
+  edge: '#E8590C',
+  iot: '#F08C00',
+  agents: '#5F3DC4',
 };
 
 /** Nombres de los nodos conectados a nodeId (excluyendo 'core'). */
