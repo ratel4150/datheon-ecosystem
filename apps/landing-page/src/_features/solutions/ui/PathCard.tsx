@@ -38,9 +38,20 @@ export function PathCard({ path, T, onSelect, delay = 0 }: PathCardProps) {
       variants={cardVariants}
       whileHover={{ y: -3 }}
       elevation={0}
-      sx={{ bgcolor: T.surface, border: `1px solid ${T.border}`, borderRadius: '14px', height: '100%', transition: 'border-color 0.25s ease, background-color 0.3s ease' }}
+      sx={{
+        bgcolor: T.surface,
+        border: `1px solid ${T.border}`,
+        borderRadius: '14px',
+        height: '100%',
+        transition: 'border-color 0.25s ease, background-color 0.3s ease, box-shadow 0.25s ease',
+        '&:hover': { borderColor: alpha(path.color, 0.45), boxShadow: `0 8px 24px ${alpha(path.color, 0.16)}` },
+      }}
     >
-      <CardActionArea onClick={() => onSelect(path.id)} sx={{ height: '100%', p: 0.5 }}>
+      <CardActionArea
+        onClick={() => onSelect(path.id)}
+        className="sol-focus"
+        sx={{ height: '100%', p: 0.5, borderRadius: '14px' }}
+      >
         <CardContent sx={{ p: 2.25 }}>
           <Box
             sx={{
@@ -52,6 +63,7 @@ export function PathCard({ path, T, onSelect, delay = 0 }: PathCardProps) {
               alignItems: 'center',
               justifyContent: 'center',
               mb: 1.5,
+              transition: 'background-color 0.2s ease',
             }}
           >
             <Icon size={19} color={path.color} />

@@ -1,15 +1,17 @@
 'use client';
 
-import { Box, Grid, Card, CardActionArea, CardContent, Typography, Button } from '@mui/material';
+import { Box, Grid, Card, CardActionArea, CardContent, Typography, Button, CircularProgress } from '@mui/material';
 import { motion } from 'framer-motion';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
 import { MONO } from '../lib';
+import { SolutionsBreadcrumb } from './SolutionsBreadcrumb';
 import type { PathDefinition } from '../lib';
 
 interface Tokens {
   surface: string;
   text: string;
   textMid: string;
+  textMute: string;
   accent: string;
   accentDk: string;
   border: string;
@@ -21,26 +23,37 @@ interface SubOptionGridProps {
   prompt: string;
   backLabel: string;
   generateLabel: string;
+  isLoading: boolean;
   T: Tokens;
   onSelectSubOption: (id: string) => void;
   onBack: () => void;
   onGenerate: () => void;
 }
 
-export function SubOptionGrid({ path, selectedSubOptionId, prompt, backLabel, generateLabel, T, onSelectSubOption, onBack, onGenerate }: SubOptionGridProps) {
+export function SubOptionGrid({
+  path,
+  selectedSubOptionId,
+  prompt,
+  backLabel,
+  generateLabel,
+  isLoading,
+  T,
+  onSelectSubOption,
+  onBack,
+  onGenerate,
+}: SubOptionGridProps) {
   return (
     <Box component={motion.div} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
       <Button
         onClick={onBack}
         startIcon={<FiArrowLeft size={13} />}
+        className="sol-focus"
         sx={{ fontFamily: MONO, fontSize: '0.72rem', color: T.textMid, textTransform: 'none', mb: 2, '&:hover': { color: T.accent, bgcolor: 'transparent' } }}
       >
         {backLabel}
       </Button>
 
-      <Typography sx={{ fontFamily: MONO, fontWeight: 800, fontSize: '0.78rem', letterSpacing: '0.06em', color: path.color, mb: 0.5 }}>
-        {path.label}
-      </Typography>
+      <SolutionsBreadcrumb pathLabel={path.label} pathColor={path.color} T={T} />
       <Typography sx={{ fontSize: { xs: '1.1rem', md: '1.3rem' }, fontWeight: 700, color: T.text, mb: 3 }}>{prompt}</Typography>
 
       <Grid container spacing={1.5} sx={{ mb: 3 }}>
@@ -57,9 +70,15 @@ export function SubOptionGrid({ path, selectedSubOptionId, prompt, backLabel, ge
                   transition: 'border-color 0.2s ease, background-color 0.2s ease',
                 }}
               >
-                <CardActionArea onClick={() => onSelectSubOption(opt.id)} sx={{ px: 2, py: 1.75 }}>
-                  <CardContent sx={{ p: 0 }}>
+                <CardActionArea
+                  onClick={() => onSelectSubOption(opt.id)}
+                  disabled={isLoading}
+                  className="sol-focus"
+                  sx={{ px: 2, py: 1.75, borderRadius: '12px' }}
+                >
+                  <CardContent sx={{ p: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                     <Typography sx={{ fontSize: '0.88rem', fontWeight: 600, color: selected ? path.color : T.text }}>{opt.label}</Typography>
+                    {selected && <FiCheck size={16} color={path.color} />}
                   </CardContent>
                 </CardActionArea>
               </Card>
@@ -72,9 +91,11 @@ export function SubOptionGrid({ path, selectedSubOptionId, prompt, backLabel, ge
         <Button
           variant="contained"
           size="large"
-          disabled={!selectedSubOptionId}
+          disabled={!selectedSubOptionId || isLoading}
           onClick={onGenerate}
-          endIcon={<FiArrowRight size={15} />}
+          className="sol-focus"
+          startIcon={isLoading ? <CircularProgress size={15} sx={{ color: 'inherit' }} /> : undefined}
+          endIcon={!isLoading ? <FiArrowRight size={15} /> : undefined}
           sx={{
             bgcolor: path.color,
             color: '#fff',
@@ -85,7 +106,7 @@ export function SubOptionGrid({ path, selectedSubOptionId, prompt, backLabel, ge
             borderRadius: '12px',
             textTransform: 'none',
             '&:hover': { bgcolor: path.color, opacity: 0.9 },
-            '&.Mui-disabled': { bgcolor: T.border, color: T.textMid },
+            '&.Mui-disabled': { bgcolor: isLoading ? path.color : T.border, color: isLoading ? '#fff' : T.textMid, opacity: isLoading ? 0.85 : 1 },
           }}
         >
           {generateLabel}
