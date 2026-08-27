@@ -4,6 +4,7 @@ import { Card, CardActionArea, CardContent, Box, Typography, alpha } from '@mui/
 import { motion } from 'framer-motion';
 import { MONO } from '../lib';
 import { PATH_ICON } from './pathIcons';
+import { itemVariants } from './motionVariants';
 import type { PathDefinition } from '../lib';
 
 interface Tokens {
@@ -17,25 +18,15 @@ interface PathCardProps {
   path: PathDefinition;
   T: Tokens;
   onSelect: (id: string) => void;
-  delay?: number;
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay: number) => ({ opacity: 1, y: 0, transition: { delay, duration: 0.45, ease: 'easeOut' } }),
-};
-
-export function PathCard({ path, T, onSelect, delay = 0 }: PathCardProps) {
+export function PathCard({ path, T, onSelect }: PathCardProps) {
   const Icon = PATH_ICON[path.id];
 
   return (
     <Card
       component={motion.div}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      custom={delay}
-      variants={cardVariants}
+      variants={itemVariants}
       whileHover={{ y: -3 }}
       elevation={0}
       sx={{

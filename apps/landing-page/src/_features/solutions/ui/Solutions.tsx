@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Grid, Typography, Button, Alert, GlobalStyles } from '@mui/material';
+import { Box, Container, Typography, Button, Alert, GlobalStyles, alpha } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/_shared/lib/theme';
 import { C, DARK, MONO, content, resolveLang, findPath, buildNarrative } from '../lib';
@@ -42,7 +42,16 @@ export function Solutions({ lang }: Props) {
       <GlobalStyles styles={{ '.sol-focus:focus-visible': { outline: `2px solid ${T.accent}`, outlineOffset: 2 } }} />
 
       <Container maxWidth={diagram && status === 'success' ? 'lg' : 'md'} sx={{ position: 'relative', zIndex: 1, transition: 'max-width 0.2s ease' }}>
-        <SolutionsHeader kicker={t.kicker} title={t.title} subtitle={t.subtitle} textColor={T.text} textMuteColor={T.textMute} accentColor={T.accent} glow={T.glow} />
+        <SolutionsHeader
+          kicker={t.kicker}
+          titleLine1={t.titleLine1}
+          titleLine2Lead={t.titleLine2Lead}
+          titleLine2Accent={t.titleLine2Accent}
+          subtitle={t.subtitle}
+          textColor={T.text}
+          textMuteColor={T.textMute}
+          accentColor={T.accent}
+        />
 
         <AnimatePresence mode="wait">
           {!activePath && (
@@ -85,18 +94,18 @@ export function Solutions({ lang }: Props) {
               <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.9rem', color: T.text, mb: 0.75, textAlign: { xs: 'center', md: 'left' } }}>
                 {t.resultTitle}
               </Typography>
-              <Typography sx={{ fontFamily: MONO, fontSize: '0.68rem', color: T.textMute, mb: 3, maxWidth: 520, lineHeight: 1.6, textAlign: { xs: 'center', md: 'left' }, mx: { xs: 'auto', md: 0 } }}>
+              <Typography sx={{ fontFamily: MONO, fontSize: '0.68rem', color: T.textMute, mb: 4, maxWidth: 520, lineHeight: 1.6, textAlign: { xs: 'center', md: 'left' }, mx: { xs: 'auto', md: 0 } }}>
                 {t.liveNote}
               </Typography>
 
-              <Grid container spacing={{ xs: 5, md: 6 }}>
-                <Grid item xs={12} md={5}>
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '5fr 7fr' }, gap: { xs: 6, md: 0 } }}>
+                <Box component="section" aria-label={t.narrativeTitle} sx={{ pr: { xs: 0, md: 5 }, borderRight: { xs: 'none', md: `1px solid ${alpha(T.border, 0.7)}` } }}>
                   <SolutionsNarrative title={t.narrativeTitle} narrative={narrative} T={T} />
-                </Grid>
-                <Grid item xs={12} md={7}>
+                </Box>
+                <Box component="section" aria-label={t.resultTitle} sx={{ pl: { xs: 0, md: 5 } }}>
                   <SolutionsDiagramPanel diagram={diagram} t={t} T={T} />
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
 
               <SolutionsCtaBanner headline={t.ctaHeadline} body={t.ctaBody} buttonLabel={t.ctaButtonLabel} T={T} />
 
