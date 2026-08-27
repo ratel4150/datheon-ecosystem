@@ -106,7 +106,7 @@ export function BlocklyDiagram({ tree, T, height = 460 }: BlocklyDiagramProps) {
       const workspace = Blockly.inject(containerRef.current, {
         readOnly: false,
         trashcan: false,
-        zoom: { controls: true, wheel: true, startScale: 0.8, maxScale: 2, minScale: 0.35 },
+        zoom: { controls: true, wheel: true, startScale: 0.75, maxScale: 2, minScale: 0.3 },
         move: { scrollbars: true, drag: true, wheel: false },
         theme,
       });

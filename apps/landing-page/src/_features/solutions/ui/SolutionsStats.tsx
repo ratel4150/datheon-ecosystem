@@ -34,21 +34,9 @@ export function SolutionsStats({ stats, blocksWord, levelsWord, categoriesWord, 
   return (
     <Stack direction="row" spacing={3} justifyContent="center" sx={{ mb: 2.5 }}>
       {items.map((item, i) => (
-        <Stack
-          key={item.label}
-          component={motion.div}
-          initial="hidden"
-          animate="visible"
-          custom={i * 0.08}
-          variants={numberVariants}
-          direction="row"
-          alignItems="baseline"
-          spacing={0.6}
-        >
+        <Stack key={item.label} component={motion.div} initial="hidden" animate="visible" custom={i * 0.08} variants={numberVariants} direction="row" alignItems="baseline" spacing={0.6}>
           <Typography sx={{ fontFamily: MONO, fontWeight: 800, fontSize: '1.1rem', color: T.accent }}>{item.value}</Typography>
-          <Typography sx={{ fontFamily: MONO, fontSize: '0.68rem', color: T.textMute, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-            {item.label}
-          </Typography>
+          <Typography sx={{ fontFamily: MONO, fontSize: '0.68rem', color: T.textMute, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{item.label}</Typography>
         </Stack>
       ))}
     </Stack>

@@ -70,12 +70,7 @@ export function SubOptionGrid({
                   transition: 'border-color 0.2s ease, background-color 0.2s ease',
                 }}
               >
-                <CardActionArea
-                  onClick={() => onSelectSubOption(opt.id)}
-                  disabled={isLoading}
-                  className="sol-focus"
-                  sx={{ px: 2, py: 1.75, borderRadius: '12px' }}
-                >
+                <CardActionArea onClick={() => onSelectSubOption(opt.id)} disabled={isLoading} className="sol-focus" sx={{ px: 2, py: 1.75, borderRadius: '12px' }}>
                   <CardContent sx={{ p: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                     <Typography sx={{ fontSize: '0.88rem', fontWeight: 600, color: selected ? path.color : T.text }}>{opt.label}</Typography>
                     {selected && <FiCheck size={16} color={path.color} />}

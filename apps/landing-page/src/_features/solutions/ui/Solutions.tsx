@@ -1,14 +1,17 @@
 'use client';
 
-import { Box, Container, Button, Alert, GlobalStyles } from '@mui/material';
+import { Box, Container, Grid, Typography, Button, Alert, GlobalStyles } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/_shared/lib/theme';
-import { C, DARK, MONO, content, resolveLang, findPath } from '../lib';
+import { C, DARK, MONO, content, resolveLang, findPath, buildNarrative } from '../lib';
 import { useSolutionBuilder } from '../model';
 import { SolutionsHeader } from './SolutionsHeader';
 import { PathGrid } from './PathGrid';
 import { SubOptionGrid } from './SubOptionGrid';
+import { SolutionsBreadcrumb } from './SolutionsBreadcrumb';
+import { SolutionsNarrative } from './SolutionsNarrative';
 import { SolutionsDiagramPanel } from './SolutionsDiagramPanel';
+import { SolutionsCtaBanner } from './SolutionsCtaBanner';
 import type { Lang } from '@/_shared/types/i18n';
 
 interface Props {
@@ -32,11 +35,13 @@ export function Solutions({ lang }: Props) {
     generate({ pathId: activePath.id, pathLabel: activePath.label, subOptionId: activeSubOption.id, subOptionLabel: activeSubOption.label });
   };
 
+  const narrative = diagram && activePath && activeSubOption ? buildNarrative(diagram, activePath.label, activeSubOption.label) : null;
+
   return (
     <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, overflow: 'hidden', py: { xs: 8, md: 10 }, transition: 'background-color 0.3s ease' }}>
       <GlobalStyles styles={{ '.sol-focus:focus-visible': { outline: `2px solid ${T.accent}`, outlineOffset: 2 } }} />
 
-      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth={diagram && status === 'success' ? 'lg' : 'md'} sx={{ position: 'relative', zIndex: 1, transition: 'max-width 0.2s ease' }}>
         <SolutionsHeader kicker={t.kicker} title={t.title} subtitle={t.subtitle} textColor={T.text} textMuteColor={T.textMute} accentColor={T.accent} glow={T.glow} />
 
         <AnimatePresence mode="wait">
@@ -73,9 +78,28 @@ export function Solutions({ lang }: Props) {
             </motion.div>
           )}
 
-          {activePath && status === 'success' && diagram && activeSubOption && (
+          {activePath && activeSubOption && status === 'success' && diagram && narrative && (
             <motion.div key="result" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-              <SolutionsDiagramPanel path={activePath} subOptionLabel={activeSubOption.label} diagram={diagram} t={t} T={T} />
+              <SolutionsBreadcrumb pathLabel={activePath.label} pathColor={activePath.color} subOptionLabel={activeSubOption.label} T={T} />
+
+              <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.9rem', color: T.text, mb: 0.75, textAlign: { xs: 'center', md: 'left' } }}>
+                {t.resultTitle}
+              </Typography>
+              <Typography sx={{ fontFamily: MONO, fontSize: '0.68rem', color: T.textMute, mb: 3, maxWidth: 520, lineHeight: 1.6, textAlign: { xs: 'center', md: 'left' }, mx: { xs: 'auto', md: 0 } }}>
+                {t.liveNote}
+              </Typography>
+
+              <Grid container spacing={{ xs: 5, md: 6 }}>
+                <Grid item xs={12} md={5}>
+                  <SolutionsNarrative title={t.narrativeTitle} narrative={narrative} T={T} />
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <SolutionsDiagramPanel diagram={diagram} t={t} T={T} />
+                </Grid>
+              </Grid>
+
+              <SolutionsCtaBanner headline={t.ctaHeadline} body={t.ctaBody} buttonLabel={t.ctaButtonLabel} T={T} />
+
               <Box sx={{ textAlign: 'center', mt: 3 }}>
                 <Button
                   onClick={reset}

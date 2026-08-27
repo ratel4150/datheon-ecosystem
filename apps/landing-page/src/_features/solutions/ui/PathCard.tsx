@@ -47,11 +47,7 @@ export function PathCard({ path, T, onSelect, delay = 0 }: PathCardProps) {
         '&:hover': { borderColor: alpha(path.color, 0.45), boxShadow: `0 8px 24px ${alpha(path.color, 0.16)}` },
       }}
     >
-      <CardActionArea
-        onClick={() => onSelect(path.id)}
-        className="sol-focus"
-        sx={{ height: '100%', p: 0.5, borderRadius: '14px' }}
-      >
+      <CardActionArea onClick={() => onSelect(path.id)} className="sol-focus" sx={{ height: '100%', p: 0.5, borderRadius: '14px' }}>
         <CardContent sx={{ p: 2.25 }}>
           <Box
             sx={{
