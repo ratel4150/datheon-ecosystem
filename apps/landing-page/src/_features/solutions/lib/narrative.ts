@@ -45,8 +45,6 @@ export function buildNarrative(tree: ArchitectureNode, pathLabel: string, subOpt
         order.push(group);
       }
       const items = byGroup.get(group)!;
-      // Evita repetir el mismo tipo de bloque dos veces en la narrativa
-      // aunque aparezca varias veces en el árbol.
       if (!items.some((it) => it.blockLabel === def.label)) {
         items.push({ label: node.label, blockLabel: def.label, description: def.description });
       }
@@ -67,4 +65,25 @@ export function buildNarrative(tree: ArchitectureNode, pathLabel: string, subOpt
   const intro = `Para "${subOptionLabel}" dentro de ${pathLabel.toLowerCase()}, diseñamos una arquitectura de referencia. Esto es lo que la compone y por qué cada pieza está ahí.`;
 
   return { intro, sections };
+}
+
+/** Versión en texto plano de la narrativa — para copiar al portapapeles. */
+export function narrativeToPlainText(narrative: Narrative, pathLabel: string, subOptionLabel: string): string {
+  const lines: string[] = [];
+  lines.push(`Arquitectura de referencia — ${pathLabel} / ${subOptionLabel}`);
+  lines.push('');
+  lines.push(narrative.intro);
+  lines.push('');
+
+  narrative.sections.forEach((section) => {
+    lines.push(section.groupLabel.toUpperCase());
+    lines.push(section.intro);
+    section.items.forEach((item) => {
+      lines.push(`  • ${item.label} — ${item.description}`);
+    });
+    lines.push('');
+  });
+
+  lines.push('Generado con Datheón — datheon.com');
+  return lines.join('\n');
 }

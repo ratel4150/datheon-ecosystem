@@ -8,5 +8,5 @@ export type { PathId, PathDefinition, SubOption } from './paths';
 export { BLOCKS, GROUPS, blockGroupColor, blockGroupOf, blockDefinitionOf, isValidBlockType, analyzeTree } from './blocks';
 export type { BlockDefinition, BlockGroup, GroupId, ArchitectureNode, TreeStats } from './blocks';
 export { buildArchitecturePrompt } from './prompt';
-export { buildNarrative } from './narrative';
+export { buildNarrative, narrativeToPlainText } from './narrative';
 export type { Narrative, NarrativeSection, NarrativeItem } from './narrative';

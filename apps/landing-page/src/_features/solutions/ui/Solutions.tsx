@@ -103,7 +103,14 @@ export function Solutions({ lang }: Props) {
                   <SolutionsNarrative title={t.narrativeTitle} narrative={narrative} T={T} />
                 </Box>
                 <Box component="section" aria-label={t.resultTitle} sx={{ pl: { xs: 0, md: 5 } }}>
-                  <SolutionsDiagramPanel diagram={diagram} t={t} T={T} />
+                  <SolutionsDiagramPanel
+                    diagram={diagram}
+                    narrative={narrative}
+                    pathLabel={activePath.label}
+                    subOptionLabel={activeSubOption.label}
+                    t={t}
+                    T={T}
+                  />
                 </Box>
               </Box>
 
