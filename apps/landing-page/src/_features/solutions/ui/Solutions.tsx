@@ -6,6 +6,7 @@ import { useTheme } from '@/_shared/lib/theme';
 import { C, DARK, MONO, content, resolveLang, findPath, buildNarrative } from '../lib';
 import { useSolutionBuilder } from '../model';
 import { SolutionsHeader } from './SolutionsHeader';
+import { SolutionsPixelRain } from './SolutionsPixelRain';
 import { PathGrid } from './PathGrid';
 import { SubOptionGrid } from './SubOptionGrid';
 import { SolutionsBreadcrumb } from './SolutionsBreadcrumb';
@@ -40,6 +41,7 @@ export function Solutions({ lang }: Props) {
   return (
     <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, overflow: 'hidden', py: { xs: 8, md: 10 }, transition: 'background-color 0.3s ease' }}>
       <GlobalStyles styles={{ '.sol-focus:focus-visible': { outline: `2px solid ${T.accent}`, outlineOffset: 2 } }} />
+      <SolutionsPixelRain color={T.accent} />
 
       <Container maxWidth={diagram && status === 'success' ? 'lg' : 'md'} sx={{ position: 'relative', zIndex: 1, transition: 'max-width 0.2s ease' }}>
         <SolutionsHeader

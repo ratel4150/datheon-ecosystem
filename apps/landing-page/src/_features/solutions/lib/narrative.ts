@@ -67,7 +67,6 @@ export function buildNarrative(tree: ArchitectureNode, pathLabel: string, subOpt
   return { intro, sections };
 }
 
-/** Versión en texto plano de la narrativa — para copiar al portapapeles. */
 export function narrativeToPlainText(narrative: Narrative, pathLabel: string, subOptionLabel: string): string {
   const lines: string[] = [];
   lines.push(`Arquitectura de referencia — ${pathLabel} / ${subOptionLabel}`);

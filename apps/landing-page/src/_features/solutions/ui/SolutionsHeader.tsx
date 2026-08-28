@@ -26,22 +26,31 @@ export function SolutionsHeader({ kicker, titleLine1, titleLine2Lead, titleLine2
       variants={containerVariants}
       sx={{ textAlign: 'center', maxWidth: 680, mx: 'auto', mb: { xs: 5, md: 6 } }}
     >
-      <Box component={motion.div} variants={itemVariants} sx={{ mb: 1.5 }}>
-        <Typography sx={{ fontFamily: MONO, fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.16em', color: accentColor, transition: 'color 0.3s ease' }}>
+      <Box component={motion.div} variants={itemVariants} sx={{ mb: 0.5 }}>
+        <Typography
+          sx={{
+            fontFamily: MONO,
+            fontWeight: 700,
+            fontSize: '0.76rem',
+            letterSpacing: '0.16em',
+            color: textColor,
+            transition: 'color 0.3s ease',
+          }}
+        >
           {kicker}
         </Typography>
       </Box>
 
-      <Box component={motion.div} variants={itemVariants} sx={{ mb: 2 }}>
+      <Box component={motion.div} variants={itemVariants} sx={{ mt: 2.5, mb: 2.5 }}>
         <Typography
           variant="h1"
           sx={{
             fontFamily: DISPLAY,
             fontWeight: 800,
-            fontSize: { xs: '2rem', md: '2.6rem' },
+            fontSize: { xs: '2.1rem', sm: '2.5rem', md: '2.9rem', lg: '3.2rem' },
             lineHeight: 1.2,
-            color: textColor,
             letterSpacing: '-0.02em',
+            color: textColor,
             transition: 'color 0.3s ease',
           }}
         >
@@ -56,7 +65,17 @@ export function SolutionsHeader({ kicker, titleLine1, titleLine2Lead, titleLine2
       </Box>
 
       <Box component={motion.div} variants={itemVariants}>
-        <Typography sx={{ fontSize: '0.95rem', color: textMuteColor, lineHeight: 1.7, mx: 'auto', maxWidth: 420, transition: 'color 0.3s ease' }}>
+        <Typography
+          sx={{
+            fontSize: { xs: '1rem', md: '1.05rem' },
+            color: textMuteColor,
+            maxWidth: 480,
+            lineHeight: 1.75,
+            fontWeight: 400,
+            mx: 'auto',
+            transition: 'color 0.3s ease',
+          }}
+        >
           {subtitle}
         </Typography>
       </Box>
