@@ -2,6 +2,7 @@
 import { Hero } from '@/_features/hero';
 import { Ecosystem } from '@/_features/ecosystem';
 import { Solutions } from '@/_features/solutions';
+import { Stage } from '@/_features/stage';
 import { SectionDivider } from '@/_shared/ui';
 import type { Translations, Lang } from '@/_shared/types/i18n';
 
@@ -18,4 +19,6 @@ const { lang, t } = Astro.props;
   <Ecosystem lang={lang} client:load />
   <SectionDivider client:load />
   <Solutions lang={lang} client:load />
+  <SectionDivider client:load />
+  <Stage lang={lang} client:load />
 </main>
