@@ -1,18 +1,26 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
-import { MONO, STACK } from '../lib';
+import { MONO } from '../lib';
 import type { StackTech } from '../lib';
+
+interface Tokens {
+  text: string;
+  textMid: string;
+  accent: string;
+  border: string;
+}
 
 interface StackNodeProps {
   tech: StackTech;
   selected: boolean;
+  T: Tokens;
   onSelect: (techId: string) => void;
   delay?: number;
 }
 
-export function StackNode({ tech, selected, onSelect, delay = 0 }: StackNodeProps) {
+export function StackNode({ tech, selected, T, onSelect, delay = 0 }: StackNodeProps) {
   return (
     <Box
       component={motion.button}
@@ -31,11 +39,11 @@ export function StackNode({ tech, selected, onSelect, delay = 0 }: StackNodeProp
         fontFamily: MONO,
         fontSize: '0.72rem',
         fontWeight: 600,
-        bgcolor: selected ? STACK.accent : 'transparent',
-        color: selected ? '#031018' : STACK.textMid,
-        border: `1px solid ${selected ? STACK.accent : STACK.border}`,
+        bgcolor: selected ? T.accent : 'transparent',
+        color: selected ? '#FFFFFF' : T.textMid,
+        border: `1px solid ${selected ? T.accent : T.border}`,
         transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease',
-        '&:hover': { borderColor: STACK.accent, color: selected ? '#031018' : STACK.text },
+        '&:hover': { borderColor: T.accent, color: selected ? '#FFFFFF' : T.text },
       }}
     >
       {tech.label}

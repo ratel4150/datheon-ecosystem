@@ -6,7 +6,6 @@ export type TechnologyStackContent = {
   title: string;
   subtitle: string;
   body: string;
-  exploreLabel: string;
   traceLabel: string;
   traceHint: string;
   closingHeadline: string;
@@ -20,7 +19,6 @@ export const content: Record<Lang, TechnologyStackContent> = {
     title: 'STACK TECNOLÓGICO DATHEÓN',
     subtitle: 'De la interfaz a la infraestructura.',
     body: 'Un solo socio de ingeniería a través de todo el stack tecnológico.',
-    exploreLabel: 'EXPLORAR EL STACK →',
     traceLabel: 'RASTREAR EN EL STACK',
     traceHint: 'Selecciona una tecnología para ver con qué otras capas se relaciona.',
     closingHeadline: 'UN STACK. MUCHAS POSIBILIDADES.',
@@ -32,7 +30,6 @@ export const content: Record<Lang, TechnologyStackContent> = {
     title: 'DATHEÓN TECHNOLOGY STACK',
     subtitle: 'From interface to infrastructure.',
     body: 'One engineering partner across the entire technology stack.',
-    exploreLabel: 'EXPLORE THE STACK →',
     traceLabel: 'TRACE THE STACK',
     traceHint: 'Select a technology to see which other layers it relates to.',
     closingHeadline: 'ONE STACK. MANY POSSIBILITIES.',
@@ -44,7 +41,6 @@ export const content: Record<Lang, TechnologyStackContent> = {
     title: 'STACK TECHNOLOGIQUE DATHEÓN',
     subtitle: "De l'interface à l'infrastructure.",
     body: "Un seul partenaire d'ingénierie à travers toute la stack technologique.",
-    exploreLabel: 'EXPLORER LA STACK →',
     traceLabel: 'TRACER DANS LA STACK',
     traceHint: 'Sélectionnez une technologie pour voir à quelles autres couches elle se rapporte.',
     closingHeadline: 'UNE STACK. UNE MULTITUDE DE POSSIBILITÉS.',

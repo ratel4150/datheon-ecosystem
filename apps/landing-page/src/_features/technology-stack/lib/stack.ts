@@ -4,8 +4,6 @@ export type LayerId = 'experience' | 'application' | 'data' | 'intelligence' | '
 export interface StackTech {
   id: string;
   label: string;
-  /** Otras capas con las que esta tecnología se relaciona — alimenta
-   *  "Trace the Stack". No todas las tecnologías la necesitan. */
   relatedLayers?: LayerId[];
 }
 
