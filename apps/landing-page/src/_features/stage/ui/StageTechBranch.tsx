@@ -28,7 +28,7 @@ export function StageTechBranch({ stage, techLabel, T }: StageTechBranchProps) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.25 }}
         sx={{ textAlign: 'center', maxWidth: 640, mx: 'auto' }}
       >
         <Typography sx={{ fontFamily: MONO, fontWeight: 800, fontSize: '0.78rem', letterSpacing: '0.06em', color: stage.color, mb: 0.75 }}>
@@ -37,7 +37,6 @@ export function StageTechBranch({ stage, techLabel, T }: StageTechBranchProps) {
         <Typography sx={{ fontSize: { xs: '1.15rem', md: '1.35rem' }, fontWeight: 700, color: T.text, mb: 1 }}>{stage.tagline}</Typography>
         <Typography sx={{ fontSize: '0.85rem', color: T.textMute, mb: 3 }}>{stage.forWhom}</Typography>
 
-        {/* Tronco corto conectando la etapa con el brote de tecnologías */}
         <Box sx={{ width: '1px', height: 20, bgcolor: alpha(stage.color, 0.4), mx: 'auto', mb: 0.5 }} />
         <Typography sx={{ fontFamily: MONO, fontSize: '0.6rem', letterSpacing: '0.05em', textTransform: 'uppercase', color: T.textMute, mb: 1.5 }}>
           {techLabel}

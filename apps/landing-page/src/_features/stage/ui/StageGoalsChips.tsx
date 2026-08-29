@@ -1,13 +1,12 @@
 'use client';
 
-import { Box, Stack, Typography, alpha } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { GOALS, MONO } from '../lib';
 
 interface Tokens {
   text: string;
   textMute: string;
   accent: string;
-  accentDk: string;
   border: string;
 }
 

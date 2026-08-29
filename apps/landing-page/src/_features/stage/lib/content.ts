@@ -10,7 +10,6 @@ export type StageContent = {
   goalsPrompt: string;
   ctaLabel: string;
   ctaContextPrefix: string;
-  selectHint: string;
 };
 
 export const content: Record<Lang, StageContent> = {
@@ -23,7 +22,6 @@ export const content: Record<Lang, StageContent> = {
     goalsPrompt: '¿Qué quieres lograr?',
     ctaLabel: 'Hablar con alguien que entiende mi etapa →',
     ctaContextPrefix: 'Quiero:',
-    selectHint: 'Elige una etapa para ver qué tecnología emerge de ahí.',
   },
   en: {
     kicker: 'YOUR STAGE',
@@ -34,17 +32,15 @@ export const content: Record<Lang, StageContent> = {
     goalsPrompt: 'What do you want to achieve?',
     ctaLabel: 'Talk to someone who understands my stage →',
     ctaContextPrefix: 'I want to:',
-    selectHint: 'Pick a stage to see what technology emerges from it.',
   },
   fr: {
     kicker: 'VOTRE ÉTAPE',
     title: 'À QUELLE ÉTAPE EST VOTRE ENTREPRISE ?',
-    subtitle: 'La bonne technologie dépend d\'où vous êtes et où vous voulez aller.',
+    subtitle: "La bonne technologie dépend d'où vous êtes et où vous voulez aller.",
     forWhomLabel: "C'est pour vous si",
     techLabel: 'Ce que nous construisons généralement ici',
     goalsPrompt: 'Que voulez-vous accomplir ?',
-    ctaLabel: 'Parler à quelqu\'un qui comprend mon étape →',
+    ctaLabel: "Parler à quelqu'un qui comprend mon étape →",
     ctaContextPrefix: 'Je veux :',
-    selectHint: 'Choisissez une étape pour voir quelle technologie en émerge.',
   },
 };
