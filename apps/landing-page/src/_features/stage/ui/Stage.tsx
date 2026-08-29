@@ -5,6 +5,7 @@ import { useTheme } from '@/_shared/lib/theme';
 import { C, DARK, content, resolveLang, STAGES, findStage } from '../lib';
 import { useStageSelector } from '../model';
 import { StageHeader } from './StageHeader';
+import { StageJourney3D } from './StageJourney3D';
 import { JourneyStepper } from './JourneyStepper';
 import { StageTechBranch } from './StageTechBranch';
 import { StageMobileStepper } from './StageMobileStepper';
@@ -33,6 +34,8 @@ export function Stage({ lang }: Props) {
 
       <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
         <StageHeader kicker={t.kicker} title={t.title} subtitle={t.subtitle} textColor={T.text} textMuteColor={T.textMute} accentColor={T.accent} />
+
+        <StageJourney3D activeStageId={activeStageId} hoveredStageId={hoveredStageId} T={T} onSelect={selectStage} onHover={hoverStage} />
 
         <JourneyStepper activeStageId={activeStageId} T={T} onSelect={selectStage} onHover={hoverStage} />
 
