@@ -1,11 +1,9 @@
 'use client';
 
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { BUILD_STAGES, MONO } from '../lib';
-import { BuildStageRow } from './BuildStageRow';
-import { BuildConnector } from './BuildConnector';
-import { containerVariants, itemVariants } from './motionVariants';
+import { BUILD_STAGES, GRAPH_NODES, GRAPH_EDGES, MONO } from '../lib';
+import { SystemGraph } from './SystemGraph';
 
 interface Tokens {
   text: string;
@@ -20,20 +18,19 @@ interface SystemBuilderReducedProps {
 }
 
 export function SystemBuilderReduced({ T }: SystemBuilderReducedProps) {
+  const finalStage = BUILD_STAGES[BUILD_STAGES.length - 1];
+
   return (
-    <Box component={motion.div} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={containerVariants} sx={{ py: 4 }}>
-      <Stack spacing={0} sx={{ alignItems: 'center' }}>
-        {BUILD_STAGES.map((stage, i) => (
-          <Box key={stage.id} component={motion.div} variants={itemVariants} sx={{ textAlign: 'center' }}>
-            {i > 0 && <BuildConnector revealed T={T} length={26} />}
-            <Typography sx={{ fontFamily: MONO, fontSize: '0.62rem', color: T.accent, fontWeight: 700, mb: 0.5 }}>
-              {String(i + 1).padStart(2, '0')} · {stage.title}
-            </Typography>
-            <BuildStageRow stage={stage} T={T} />
-            <Typography sx={{ fontSize: '0.78rem', color: T.textMute, maxWidth: 360, mx: 'auto', mt: 1, mb: 2.5 }}>{stage.narrative}</Typography>
-          </Box>
-        ))}
-      </Stack>
+    <Box
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.4 }}
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}
+    >
+      <Typography sx={{ fontFamily: MONO, fontSize: '0.85rem', color: T.textMute, textAlign: 'center', maxWidth: 380, mb: 2 }}>{finalStage.narrative}</Typography>
+      <SystemGraph visibleNodeIds={GRAPH_NODES.map((n) => n.id)} visibleEdgeIds={GRAPH_EDGES.map((e) => e.id)} showLabels T={T} scale={1} />
     </Box>
   );
 }

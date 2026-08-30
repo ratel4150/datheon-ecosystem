@@ -3,44 +3,51 @@ export interface BuildStageDefinition {
   id: string;
   title: string;
   narrative: string;
-  nodes: string[];
+  nodeIds: string[];
+  edgeIds: string[];
 }
 
 export const BUILD_STAGES: BuildStageDefinition[] = [
   {
-    id: 'foundation',
-    title: 'Un servicio',
-    narrative: 'Todo sistema real empieza simple — pero bien construido desde el día uno.',
-    nodes: ['API REST'],
+    id: 'idea',
+    title: 'Un punto',
+    narrative: 'Todo sistema real empieza en un solo lugar.',
+    nodeIds: ['frontend'],
+    edgeIds: [],
   },
   {
-    id: 'scale',
-    title: 'Escala horizontal',
-    narrative: 'Cuando crece la demanda, el sistema se reparte solo, sin puntos únicos de falla.',
-    nodes: ['Load Balancer', 'Servicio A', 'Servicio B', 'Servicio C'],
+    id: 'connect',
+    title: 'Primera conexión',
+    narrative: 'La idea se conecta con lo que la sostiene.',
+    nodeIds: ['frontend', 'api'],
+    edgeIds: ['e1'],
   },
   {
-    id: 'persist',
-    title: 'Persistencia',
-    narrative: 'Los datos viven en el lugar correcto, y lo que se repite se sirve al instante.',
-    nodes: ['Base de Datos', 'Caché'],
+    id: 'branch',
+    title: 'Se ramifica',
+    narrative: 'Una sola pieza no basta — el trabajo se reparte.',
+    nodeIds: ['frontend', 'api', 'serviceA', 'serviceB'],
+    edgeIds: ['e1', 'e2', 'e3'],
   },
   {
-    id: 'communicate',
-    title: 'Comunicación desacoplada',
-    narrative: 'Los servicios se avisan entre sí sin depender directamente uno del otro.',
-    nodes: ['Cola de Eventos'],
+    id: 'expand',
+    title: 'Se expande',
+    narrative: 'Cuando crece la demanda, el sistema crece con ella.',
+    nodeIds: ['frontend', 'api', 'serviceA', 'serviceB', 'serviceC'],
+    edgeIds: ['e1', 'e2', 'e3', 'e4'],
   },
   {
-    id: 'observe',
-    title: 'Observabilidad',
-    narrative: 'Si algo falla, lo sabemos antes que el usuario.',
-    nodes: ['Métricas', 'Logs', 'Alertas'],
+    id: 'converge',
+    title: 'Converge',
+    narrative: 'Lo que se separó vuelve a encontrarse donde vive la información.',
+    nodeIds: ['frontend', 'api', 'serviceA', 'serviceB', 'serviceC', 'data'],
+    edgeIds: ['e1', 'e2', 'e3', 'e4', 'e5', 'e6'],
   },
   {
-    id: 'ship',
-    title: 'Entrega continua',
-    narrative: 'Cada cambio se prueba y se despliega solo — sin procesos manuales que rompan cosas.',
-    nodes: ['CI/CD', 'Tests Automatizados'],
+    id: 'complete',
+    title: 'Arquitectura completa',
+    narrative: 'Frontend, API, servicios y datos — un sistema real, no solo código.',
+    nodeIds: ['frontend', 'api', 'serviceA', 'serviceB', 'serviceC', 'data'],
+    edgeIds: ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7'],
   },
 ];

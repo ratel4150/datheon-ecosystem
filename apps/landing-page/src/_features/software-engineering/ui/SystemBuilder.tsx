@@ -1,11 +1,10 @@
 'use client';
 
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { BUILD_STAGES, MONO } from '../lib';
 import { useScrollBuild } from '../model';
-import { BuildStageRow } from './BuildStageRow';
-import { BuildConnector } from './BuildConnector';
+import { SystemGraph } from './SystemGraph';
 
 interface Tokens {
   text: string;
@@ -23,6 +22,7 @@ interface SystemBuilderProps {
 export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
   const { containerRef, scale, activeIndex } = useScrollBuild();
   const activeStage = BUILD_STAGES[activeIndex];
+  const isFinal = activeIndex === BUILD_STAGES.length - 1;
 
   return (
     <Box ref={containerRef} sx={{ position: 'relative', height: { xs: `${BUILD_STAGES.length * 55}vh`, md: `${BUILD_STAGES.length * 62}vh` } }}>
@@ -39,7 +39,7 @@ export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
           }}
         />
 
-        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', mb: 3, maxWidth: 420 }}>
+        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', mb: 2, maxWidth: 420 }}>
           <Typography
             key={activeStage.id}
             component={motion.p}
@@ -53,25 +53,8 @@ export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
           <Typography sx={{ fontSize: '0.85rem', color: T.textMute }}>{activeStage.narrative}</Typography>
         </Box>
 
-        <Box component={motion.div} style={{ scale }} sx={{ position: 'relative', zIndex: 1 }}>
-          <Stack spacing={0} sx={{ alignItems: 'center' }}>
-            {BUILD_STAGES.map((stage, i) => {
-              const revealed = i <= activeIndex;
-              return (
-                <Box
-                  key={stage.id}
-                  sx={{
-                    opacity: revealed ? 1 : 0,
-                    transform: revealed ? 'translateY(0)' : 'translateY(8px)',
-                    transition: 'opacity 0.4s ease, transform 0.4s ease',
-                  }}
-                >
-                  {i > 0 && <BuildConnector revealed={revealed} T={T} length={26} />}
-                  <BuildStageRow stage={stage} T={T} />
-                </Box>
-              );
-            })}
-          </Stack>
+        <Box sx={{ position: 'relative', zIndex: 1 }}>
+          <SystemGraph visibleNodeIds={activeStage.nodeIds} visibleEdgeIds={activeStage.edgeIds} showLabels={isFinal} T={T} scale={scale} />
         </Box>
 
         <Typography
