@@ -12,9 +12,7 @@ export interface GraphEdge {
   to: string;
 }
 
-/** Coordenadas en un viewBox de 300×280. Frontend arriba, API al centro,
- *  tres servicios repartidos, todos convergen en Data abajo — el mismo
- *  diagrama del brief. */
+/** Coordenadas en un viewBox de 300×280. */
 export const GRAPH_NODES: GraphNode[] = [
   { id: 'frontend', x: 150, y: 36, label: 'FRONTEND' },
   { id: 'api', x: 150, y: 108, label: 'API' },

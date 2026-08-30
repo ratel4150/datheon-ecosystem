@@ -28,7 +28,7 @@ export function SoftwareEngineering({ lang }: Props) {
   }, []);
 
   return (
-    <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, overflow: 'hidden', transition: 'background-color 0.3s ease' }}>
+    <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, transition: 'background-color 0.3s ease' }}>
       <GlobalStyles styles={{ '.se-focus:focus-visible': { outline: `2px solid ${T.accent}`, outlineOffset: 2 } }} />
 
       <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1, pt: { xs: 8, md: 10 } }}>
