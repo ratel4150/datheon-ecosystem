@@ -1,6 +1,6 @@
+// File: apps/landing-page/src/_widgets/header/index.ts
+// Public API del Widget Header
 export { default as MainHeader } from './ui/MainHeader.astro';
-export { default as Logo } from './ui/Logo.astro';
-export { default as NavLinks } from './ui/NavLinks.astro';
-export { default as AuthButtons } from './ui/AuthButtons.astro';
-export { default as LanguageSelector } from './ui/LanguageSelector.astro';
-export { default as MobileMenu } from './ui/MobileMenu.astro';
+export { AppBarMain } from './ui/AppBarMain';
+export { ClerkAuth } from './ui/ClerkAuth';
+// No exportamos internos: DropdownMenu, NavItem, MobileNavGroup, IconMapper

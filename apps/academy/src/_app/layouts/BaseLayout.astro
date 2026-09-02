@@ -1,0 +1,58 @@
+---
+// src/_app/layouts/BaseLayout.astro
+import SEOHead from '@datheon/seo/SEOHead.astro';
+import { ThemeProvider } from '@/_shared/lib/theme';
+import '@/_app/styles/globals.css';
+
+const SITE_URL = 'https://academy.datheon.io'; // TODO: dominio real
+const SUPPORTED_LANGS = ['es', 'en', 'fr'] as const;
+const DEFAULT_LANG = 'es';
+
+export interface Props {
+  lang?: string;
+  children?: any;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoPath?: string;
+  seoImage?: string;
+  seoStructuredData?: Record<string, unknown>[];
+}
+
+const {
+  lang = 'es',
+  seoTitle = 'Datheón Academy',
+  seoDescription = 'Academia sin fines de lucro de Datheón: aprende construyendo proyectos reales.',
+  seoPath = '/',
+  seoImage = '/og-image-academy.png',
+  seoStructuredData = [],
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEOHead
+      siteUrl={SITE_URL}
+      supportedLangs={SUPPORTED_LANGS}
+      defaultLang={DEFAULT_LANG}
+      lang={lang}
+      path={seoPath}
+      title={seoTitle}
+      description={seoDescription}
+      image={seoImage}
+      structuredData={seoStructuredData}
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <ThemeProvider client:load>
+      <main>
+        <slot />
+      </main>
+    </ThemeProvider>
+  </body>
+</html>

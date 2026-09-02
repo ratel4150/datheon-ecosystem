@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/ecosystem/ui/EcosystemHeader.tsx
 'use client';
 
 import { Box, Typography } from '@mui/material';

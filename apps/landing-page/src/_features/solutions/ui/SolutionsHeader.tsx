@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/solutions/ui/SolutionsHeader.tsx
 'use client';
 
 import { Box, Typography } from '@mui/material';

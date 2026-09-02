@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/hero/ui/variants/HeroMobile.tsx
 
 'use client';
 

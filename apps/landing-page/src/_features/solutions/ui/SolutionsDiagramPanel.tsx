@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/solutions/ui/SolutionsDiagramPanel.tsx
 'use client';
 
 import { useState } from 'react';

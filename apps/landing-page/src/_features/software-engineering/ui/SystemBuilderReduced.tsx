@@ -29,8 +29,11 @@ export function SystemBuilderReduced({ T }: SystemBuilderReducedProps) {
       transition={{ duration: 0.4 }}
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}
     >
-      <Typography sx={{ fontFamily: MONO, fontSize: '0.85rem', color: T.textMute, textAlign: 'center', maxWidth: 380, mb: 2 }}>{finalStage.narrative}</Typography>
-      <SystemGraph visibleNodeIds={GRAPH_NODES.map((n) => n.id)} visibleEdgeIds={GRAPH_EDGES.map((e) => e.id)} showLabels T={T} scale={1} />
+      <Typography sx={{ fontFamily: MONO, fontSize: '0.85rem', color: T.textMute, textAlign: 'center', maxWidth: 380, mb: 0.5 }}>{finalStage.narrative}</Typography>
+      <Typography sx={{ fontFamily: MONO, fontSize: '0.65rem', color: T.accent, fontWeight: 700, mb: 2 }}>
+        {GRAPH_NODES.length} NODOS · {GRAPH_EDGES.length} CONEXIONES
+      </Typography>
+      <SystemGraph visibleNodeIds={GRAPH_NODES.map((n) => n.id)} visibleEdgeIds={GRAPH_EDGES.map((e) => e.id)} T={T} scale={1} maxWidth={{ xs: 340, sm: 480, md: 640 }} />
     </Box>
   );
 }

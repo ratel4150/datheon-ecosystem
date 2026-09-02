@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/hero/ui/FlowNode.tsx
 'use client';
 
 import { Box, Typography, alpha } from '@mui/material';

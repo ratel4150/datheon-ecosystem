@@ -1,0 +1,16 @@
+# Datheón
+
+> Datheón diseña y construye sistemas de software reales — desde la interfaz hasta la infraestructura. Un solo socio de ingeniería a través de software, inteligencia artificial, agentes, datos, cloud e IoT.
+
+## Páginas principales
+
+- [Inicio](https://www.datheon.io/es/landing): Presentación de Datheón, su ecosistema de servicios y su stack tecnológico (6 capas: Experience, Application, Data, Intelligence, Infrastructure, Physical — 45+ tecnologías cubiertas).
+- [Datheón Academy](https://www.datheon.io/es/universidad): Academia sin fines de lucro para aprender tecnología construyendo proyectos reales, con mentoría de IA.
+
+## Áreas de trabajo
+
+Software, Inteligencia Artificial (LLMs, RAG, agentes, MCP), Infraestructura Cloud, IoT y hardware, Datos y Analítica, Automatización.
+
+## Idiomas
+
+Disponible en español, inglés y francés (rutas /es/, /en/, /fr/).

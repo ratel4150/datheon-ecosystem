@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/stage/ui/Stage.tsx
 'use client';
 
 import { Box, Container, GlobalStyles } from '@mui/material';
@@ -12,6 +13,8 @@ import { StageMobileStepper } from './StageMobileStepper';
 import { StageGoalsChips } from './StageGoalsChips';
 import { StageCta } from './StageCta';
 import type { Lang } from '@/_shared/types/i18n';
+import React from 'react';
+import { setStoredStage } from '@/_shared/lib/userJourney';
 
 interface Props {
   lang: Lang;
@@ -27,6 +30,14 @@ export function Stage({ lang }: Props) {
   const { activeStageId, hoveredStageId, selectedGoals, selectStage, hoverStage, toggleGoal } = useStageSelector(STAGES[2].id);
   const activeStage = findStage(activeStageId) ?? STAGES[2];
   const displayedStage = findStage(hoveredStageId ?? '') ?? activeStage;
+
+
+  // 2. Dentro de `export function Stage(...)`, busca la línea:
+//    const activeStage = findStage(activeStageId) ?? STAGES[2];
+// e inmediatamente después de esa línea, agrega:
+React.useEffect(() => {
+  setStoredStage(activeStage.id, activeStage.label);
+}, [activeStage.id, activeStage.label]);
 
   return (
     <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, overflow: 'hidden', py: { xs: 8, md: 10 }, transition: 'background-color 0.3s ease' }}>

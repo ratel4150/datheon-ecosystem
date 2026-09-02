@@ -1,1 +1,0 @@
-export { TechnologyEcosystemResponsive } from './TechnologyEcosystemResponsive';

@@ -1,12 +1,11 @@
 ---
 // _widgets/header/ui/MainHeader.astro
-import { ClerkProvider } from '@/_app/providers/ClerkProvider';
+
 import { AppBarMain } from './AppBarMain';
 import type { HeaderProps } from '../model/header.types';
 
 const { lang = 'es' } = Astro.props as HeaderProps;
 ---
 
-<ClerkProvider client:load>
+
   <AppBarMain client:load currentLang={lang} />
-</ClerkProvider>

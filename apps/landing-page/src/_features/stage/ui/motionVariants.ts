@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/stage/ui/motionVariants.ts
 // _features/stage/ui/motionVariants.ts
 'use client';
 

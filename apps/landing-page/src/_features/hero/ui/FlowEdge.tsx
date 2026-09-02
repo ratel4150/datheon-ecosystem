@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/hero/ui/FlowEdge.tsx
 'use client';
 
 import { getSmoothStepPath, BaseEdge, type EdgeProps } from 'reactflow';

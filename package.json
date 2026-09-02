@@ -15,9 +15,33 @@
     "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules services/*/node_modules"
   },
   "devDependencies": {
-    "turbo": "^2.0.0",
     "@types/bun": "latest",
+    "@types/howler": "^2.2.13",
+    "@types/three": "^0.185.4",
+    "turbo": "^2.0.0",
     "typescript": "^5.3.0"
   },
-  "packageManager": "bun@1.0.0"
+  "packageManager": "bun@1.0.0",
+  "dependencies": {
+    "@nanostores/react": "^1.1.0",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "@react-three/postprocessing": "^3.1.0",
+    "@use-gesture/react": "^10.3.1",
+    "@xyflow/react": "^12.11.5",
+    "d3-force": "^3.0.0",
+    "framer-motion": "^13.1.1",
+    "gsap": "^3.15.0",
+    "howler": "^2.2.4",
+    "nanostores": "^1.5.2",
+    "react-particles-js": "^3.6.0",
+    "split-type": "^0.3.4",
+    "three": "^0.185.1"
+  },
+  "resolutions": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5"
+  }
 }

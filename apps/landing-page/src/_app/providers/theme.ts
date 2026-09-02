@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_app/providers/theme.ts
 import { createTheme } from '@mui/material/styles';
 import { fontFamily } from './fonts';
 

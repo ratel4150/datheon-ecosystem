@@ -1,0 +1,12 @@
+---
+import { LegalPage, TERMS_DOC } from '@/_features/legal';
+import type { Lang } from '@/_shared/types/i18n';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<LegalPage client:load lang={lang} document={TERMS_DOC[lang]} />

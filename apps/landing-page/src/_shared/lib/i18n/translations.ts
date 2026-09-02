@@ -1,7 +1,6 @@
-// File: apps/landing-page/src/_shared/lib/i18n/translations.ts
-import type { Translations } from '@/types/i18n';
+import type { Translations, Locale } from '../../types/i18n';
 
-export const translations: Record<string, Translations> = {
+export const translations: Record<Locale, Translations> = {
   es: {
     nav: {
       platform: 'Plataforma',
@@ -62,10 +61,40 @@ export const translations: Record<string, Translations> = {
       en: 'English',
     },
   },
+  fr: {
+    nav: {
+      platform: 'Plateforme',
+      academy: 'Académie',
+      casebook: 'Casebook',
+      pricing: 'Tarifs',
+      blog: 'Blog',
+      contact: 'Contact',
+    },
+    hero: {
+      title: 'Apprenez avec',
+      titleHighlight: 'Intelligence Artificielle',
+      description: "L'Académie Datheon vous prépare pour l'avenir avec des cours interactifs, un mentorat personnalisé et des outils alimentés par l'IA.",
+      ctaPrimary: 'Commencer Gratuitement',
+      ctaSecondary: 'Voir la Démo',
+      stats: {
+        students: 'Étudiants',
+        courses: 'Cours',
+        satisfaction: 'Satisfaction',
+      },
+    },
+    auth: {
+      login: 'Se connecter',
+      register: "S'inscrire",
+    },
+    language: {
+      es: 'Espagnol',
+      en: 'Anglais',
+    },
+  },
 };
 
-export const defaultLocale = 'es';
+export const defaultLocale: Locale = 'es';
 
-export function getTranslation(lang: string): Translations {
-  return translations[lang] || translations[defaultLocale];
-}
+export const getTranslation = (lang: string): Translations => {
+  return translations[lang as Locale] || translations[defaultLocale];
+};

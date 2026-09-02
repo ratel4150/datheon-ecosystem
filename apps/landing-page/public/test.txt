@@ -1,0 +1,2 @@
+Si ves esto, el servidor está funcionando correctamente.
+Fecha: $(date)

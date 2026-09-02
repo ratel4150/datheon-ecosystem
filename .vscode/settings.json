@@ -1,0 +1,12 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "datheon-ecosystem\\apps\\landing-page\\src\\_widgets\\",
+            "color": "foldercolorizer.color_005fd7"
+        },
+        {
+            "folderPath": "datheon-ecosystem\\apps\\landing-page\\src\\_shared\\",
+            "badge": "💀"
+        }
+    ]
+}

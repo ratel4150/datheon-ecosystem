@@ -1,17 +1,29 @@
-// _widgets/language-switcher/lib/language-switcher.utils.ts
 import type { Locale } from '@/_shared/types/i18n';
+import { routeMap, defaultRoute } from '@/_shared/config/routes';
 
-export const internalToSlug: Record<string, Record<Locale, string>> = {
-  nosotros:    { es: 'nosotros',    en: 'about',           fr: 'a-propos'        },
-  contact:     { es: 'contacto',    en: 'contact',         fr: 'contact'         },
-  privacy:     { es: 'privacidad',  en: 'privacy',         fr: 'confidentialite' },
-  servicios:   { es: 'servicios',   en: 'services',        fr: 'services'        },
-  sectores:    { es: 'sectores',    en: 'sectors',         fr: 'secteurs'        },
-  universidad: { es: 'universidad', en: 'university',      fr: 'universite'      },
-  landing:     { es: 'landing',     en: 'landing',         fr: 'landing'         },
+// Construir mapa inverso (slug → internal)
+export const slugToInternal: Record<string, string> = {};
+Object.entries(routeMap).forEach(([internal, langs]) => {
+  Object.values(langs).forEach(slug => { slugToInternal[slug] = internal; });
+});
+
+// Persistencia en localStorage
+export const setLanguagePreference = (lang: Locale): void => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('preferred-language', lang);
+  }
 };
 
-export const slugToInternal: Record<string, string> = {};
-Object.entries(internalToSlug).forEach(([internal, langs]) => {
-  Object.values(langs).forEach(slug => { slugToInternal[slug] = internal });
-});
+export const getLanguagePreference = (): Locale | null => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('preferred-language') as Locale | null;
+  }
+  return null;
+};
+
+// Obtener el slug interno desde la ruta actual
+export const getInternalSlug = (pathname: string): string => {
+  const parts = pathname.split('/').filter(Boolean);
+  const visibleSlug = parts[1] || defaultRoute;
+  return slugToInternal[visibleSlug] || visibleSlug;
+};

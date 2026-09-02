@@ -1,10 +1,12 @@
+// File: apps/landing-page/src/_features/stage/ui/StageJourney3D.tsx
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, Line } from '@react-three/drei';
+import { Text, Line, Edges, Environment } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { MONO, STAGES } from '../lib';
 import { STAGE_GEOMETRY } from './stageGeometries';
 import type { StageDefinition } from '../lib';
@@ -89,7 +91,8 @@ function StageNode({
         }}
       >
         <StageGeometry stage={stage} />
-        <meshStandardMaterial color={stage.color} emissive={stage.color} emissiveIntensity={active ? 0.6 : 0.15} roughness={0.3} metalness={0.15} flatShading />
+        <meshStandardMaterial color={stage.color} emissive={stage.color} emissiveIntensity={active ? 0.85 : 0.15} roughness={0.22} metalness={0.3} flatShading />
+        <Edges scale={1.001} threshold={15} color={active ? '#FFFFFF' : stage.color} />
       </mesh>
       <Text position={[0, -0.62, 0]} fontSize={0.15} color={active ? stage.color : '#8891A6'} anchorX="center" anchorY="middle">
         {stage.number}
@@ -170,8 +173,10 @@ function Scene({
 
   return (
     <>
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[4, 5, 5]} intensity={0.9} />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[4, 5, 5]} intensity={1.1} />
+      <directionalLight position={[-4, -2, -3]} intensity={0.3} />
+      <Environment preset="city" background={false} />
       <Line points={linePoints} color={T.border} lineWidth={1} transparent opacity={0.6} />
       {STAGES.map((stage, i) => (
         <StageNode
@@ -193,10 +198,14 @@ function Scene({
 export function StageJourney3D({ activeStageId, hoveredStageId, T, onSelect, onHover, height = 380 }: StageJourney3DProps) {
   const [mounted, setMounted] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [maxDpr, setMaxDpr] = useState(2);
 
   useEffect(() => {
     setMounted(true);
     setReducedMotion(typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (typeof window !== 'undefined') {
+      setMaxDpr(Math.min(3, window.devicePixelRatio || 1));
+    }
   }, []);
 
   return (
@@ -206,8 +215,20 @@ export function StageJourney3D({ activeStageId, hoveredStageId, T, onSelect, onH
           <Typography sx={{ fontFamily: MONO, fontSize: '0.75rem', color: T.textMute }}>Cargando…</Typography>
         </Box>
       ) : (
-        <Canvas camera={{ position: [0, 1, 9], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+        <Canvas
+          camera={{ position: [0, 1, 9], fov: 45 }}
+          dpr={[1, maxDpr]}
+          gl={{
+            antialias: true,
+            alpha: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 1.1,
+          }}
+        >
           <Scene activeStageId={activeStageId} hoveredStageId={hoveredStageId} onSelect={onSelect} onHover={onHover} T={T} reducedMotion={reducedMotion} />
+          <EffectComposer>
+            <Bloom luminanceThreshold={0.4} luminanceSmoothing={0.9} intensity={0.55} mipmapBlur />
+          </EffectComposer>
         </Canvas>
       )}
     </Box>

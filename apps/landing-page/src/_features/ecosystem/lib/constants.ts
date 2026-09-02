@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/ecosystem/lib/constants.ts
 // _features/ecosystem/lib/constants.ts
 export const C = {
   bg: '#F8F9FE',

@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_app/providers/QueryProvider.tsx
 'use client';
 
 import React from 'react';
@@ -23,7 +24,7 @@ interface QueryProviderProps {
 export const QueryProvider: React.FC<QueryProviderProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      {children as any}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

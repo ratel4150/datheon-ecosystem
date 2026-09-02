@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/system-architecture/lib/content.ts
 // _features/system-architecture/lib/content.ts
 import type { Lang } from '@/_shared/types/i18n';
 

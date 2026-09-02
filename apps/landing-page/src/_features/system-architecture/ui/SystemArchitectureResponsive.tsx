@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/system-architecture/ui/SystemArchitectureResponsive.tsx
 'use client';
 
 import { useMediaQuery, useTheme } from '@mui/material';

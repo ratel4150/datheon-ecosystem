@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/ecosystem/ui/Ecosystem.tsx
 'use client';
 
 import { Box, Container } from '@mui/material';
@@ -8,6 +9,7 @@ import { EcosystemBackdrop } from './EcosystemBackdrop';
 import { EcosystemHeader } from './EcosystemHeader';
 import { EcosystemPanel } from './EcosystemPanel';
 import { EcosystemGraphCanvas } from './EcosystemGraphCanvas';
+import { EcosystemFlowDetail } from './EcosystemFlowDetail';
 import { EcosystemNodeDetail } from './EcosystemNodeDetail';
 import { EcosystemCta } from './EcosystemCta';
 import type { Lang } from '@/_shared/types/i18n';
@@ -38,16 +40,53 @@ export function Ecosystem({ lang }: Props) {
     <Box component="section" sx={{ position: 'relative', bgcolor: T.bg, overflow: 'hidden', py: { xs: 8, md: 10 }, transition: 'background-color 0.3s ease' }}>
       <EcosystemBackdrop accent={T.accent} />
 
-      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
-        <EcosystemHeader kicker={t.kicker} kickerSub={t.kickerSub} title={t.title} subtitle={t.subtitle} textColor={T.text} textMuteColor={T.textMute} accentColor={T.accent} glow={T.glow} />
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '3fr 2fr' },
+            gap: { xs: 5, md: 6 },
+            alignItems: 'start',
+          }}
+        >
+          {/* Izquierda: solo el grafo + detalle de conexiones del nodo activo */}
+          <EcosystemPanel
+            label={t.panelLabel}
+            statusText={statusText}
+            accent={T.accent}
+            accentDk={T.accentDk}
+            surface={T.surface}
+            border={T.border}
+            textMid={T.textMid}
+            isDark={isDark}
+          >
+            <EcosystemGraphCanvas hoveredNode={hoveredNode} selectedNode={selectedNode} onHover={hoverNode} onToggle={toggleSelect} T={T} />
+            <EcosystemNodeDetail node={activeNode} connections={activeConnections} connectsWithLabel={t.connectsWith} emptyHint={t.emptyHint} T={T} />
+          </EcosystemPanel>
 
-        <EcosystemPanel label={t.panelLabel} statusText={statusText} accent={T.accent} accentDk={T.accentDk} surface={T.surface} border={T.border} textMid={T.textMid} isDark={isDark}>
-          <EcosystemGraphCanvas hoveredNode={hoveredNode} selectedNode={selectedNode} onHover={hoverNode} onToggle={toggleSelect} T={T} />
-          <EcosystemNodeDetail node={activeNode} connections={activeConnections} connectsWithLabel={t.connectsWith} emptyHint={t.emptyHint} T={T} />
-        </EcosystemPanel>
+          {/* Derecha: texto → mapa del nodo seleccionado (si hay) → CTA */}
+          <Box sx={{ position: { md: 'sticky' }, top: { md: 96 } }}>
+            <EcosystemHeader
+              kicker={t.kicker}
+              kickerSub={t.kickerSub}
+              title={t.title}
+              subtitle={t.subtitle}
+              textColor={T.text}
+              textMuteColor={T.textMute}
+              accentColor={T.accent}
+              glow={T.glow}
+            />
 
-        <Box sx={{ textAlign: 'center', mt: { xs: 4, md: 5 } }}>
-          <EcosystemCta label={t.cta} accentColor={T.accent} accentDkColor={T.accentDk} delay={0.3} />
+            {selectedNode && (
+              <Box sx={{ mb: { xs: 4, md: 5 } }}>
+                <EcosystemFlowDetail nodeId={selectedNode} T={T} />
+              </Box>
+            )}
+
+            <Box sx={{ textAlign: 'center' }}>
+              <EcosystemCta label={t.cta} accentColor={T.accent} accentDkColor={T.accentDk} delay={0.3} />
+            </Box>
+          </Box>
         </Box>
       </Container>
     </Box>

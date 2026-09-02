@@ -1,11 +1,11 @@
+// File: apps/landing-page/src/_features/ecosystem/ui/EcosystemGraphCanvas.tsx
 'use client';
 
 import { useRef } from 'react';
 import { Box, GlobalStyles } from '@mui/material';
 import { useReducedMotion } from 'framer-motion';
-import type { IconType } from 'react-icons';
-import { FiCpu, FiCode, FiZap, FiDatabase, FiCloud, FiWifi, FiRadio, FiUsers } from 'react-icons/fi';
-import { MONO, NODES, EDGES, NODE_RADIUS, NODE_COLOR, type NodeId } from '../lib';
+import { MONO, NODES, EDGES, NODE_RADIUS, NODE_COLOR, NODE_LEVEL, type NodeId } from '../lib';
+import { getIcon } from './nodeIcons';
 import { useGraphPhysics } from '../model';
 
 interface Tokens {
@@ -26,18 +26,7 @@ interface EcosystemGraphCanvasProps {
   height?: number;
 }
 
-const CANVAS_HEIGHT = 420;
-
-const NODE_ICON: Record<NodeId, IconType> = {
-  core: FiCpu,
-  software: FiCode,
-  ai: FiZap,
-  data: FiDatabase,
-  cloud: FiCloud,
-  edge: FiWifi,
-  iot: FiRadio,
-  agents: FiUsers,
-};
+const CANVAS_HEIGHT = 720;
 
 export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onToggle, T, height = CANVAS_HEIGHT }: EcosystemGraphCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,6 +48,8 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
     const touched = edge.source === 'core' ? edge.target : edge.target === 'core' ? edge.source : activeId === edge.source ? edge.source : edge.target;
     return NODE_COLOR[touched];
   };
+
+  const childCount = (nodeId: NodeId) => EDGES.filter((e) => e.source === nodeId).length;
 
   return (
     <Box
@@ -88,8 +79,8 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
               x2={t.x}
               y2={t.y}
               stroke={active ? edgeColorFor(edge) : T.border}
-              strokeWidth={active ? 2 : 1}
-              opacity={active ? 0.85 : dimmed ? 0.15 : 0.4}
+              strokeWidth={active ? 1.8 : 0.75}
+              opacity={active ? 0.85 : dimmed ? 0.08 : 0.3}
               style={{ transition: 'stroke 0.2s ease, opacity 0.2s ease' }}
             />
           );
@@ -99,13 +90,16 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
           const p = positions[node.id];
           if (!p) return null;
           const r = NODE_RADIUS[node.id];
-          const isCore = node.id === 'core';
+          const level = NODE_LEVEL[node.id];
+          const isCore = level === 'core';
+          const isCategory = level === 'category';
           const active = hoveredNode === node.id || selectedNode === node.id;
           const dimmed = !!activeId && activeId !== node.id;
           const color = NODE_COLOR[node.id];
-          const Icon = NODE_ICON[node.id];
-          const iconSize = isCore ? 22 : 16;
-          const badgeCount = node.metadata.length;
+          const Icon = getIcon(node);
+          const iconSize = isCore ? 22 : isCategory ? 16 : level === 'sub' ? 13 : 9;
+          const badgeCount = level === 'category' || level === 'sub' ? childCount(node.id) : 0;
+          const showLabelAlways = isCore || isCategory;
 
           return (
             <g
@@ -140,7 +134,7 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
             >
               <g
                 style={{
-                  transform: `scale(${active ? 1.15 : 1})`,
+                  transform: `scale(${active ? 1.25 : 1})`,
                   transformOrigin: '0px 0px',
                   transition: 'transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 }}
@@ -149,8 +143,8 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
                   r={r}
                   fill={color}
                   stroke={active ? '#FFFFFF' : T.surface}
-                  strokeWidth={active ? 2.5 : 1.5}
-                  opacity={dimmed ? 0.35 : 1}
+                  strokeWidth={active ? 2 : 1.25}
+                  opacity={dimmed ? 0.3 : 1}
                   className={isCore || active ? 'eco-node-glow' : undefined}
                   style={{ transition: 'opacity 0.2s ease, stroke 0.2s ease' }}
                 />
@@ -158,7 +152,7 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
                 {node.image ? (
                   <>
                     <clipPath id={`eco-clip-${node.id}`}>
-                      <circle r={r - 2} />
+                      <circle r={Math.max(r - 2, 1)} />
                     </clipPath>
                     <image
                       href={node.image}
@@ -177,27 +171,29 @@ export function EcosystemGraphCanvas({ hoveredNode, selectedNode, onHover, onTog
                   </foreignObject>
                 )}
 
-                {!isCore && badgeCount > 0 && (
-                  <g transform={`translate(${r * 0.72}, ${-r * 0.72})`} opacity={dimmed ? 0.4 : 1}>
-                    <circle r={7} fill={T.surface} stroke={color} strokeWidth={1.5} />
-                    <text textAnchor="middle" dominantBaseline="central" fontFamily={MONO} fontSize={8} fontWeight={700} fill={color}>
+                {badgeCount > 0 && (
+                  <g transform={`translate(${r * 0.75}, ${-r * 0.75})`} opacity={dimmed ? 0.4 : 1}>
+                    <circle r={6} fill={T.surface} stroke={color} strokeWidth={1.25} />
+                    <text textAnchor="middle" dominantBaseline="central" fontFamily={MONO} fontSize={7} fontWeight={700} fill={color}>
                       {badgeCount}
                     </text>
                   </g>
                 )}
               </g>
 
-              <text
-                y={r + 14}
-                textAnchor="middle"
-                fontFamily={MONO}
-                fontSize={isCore ? 11 : 9}
-                fontWeight={isCore ? 700 : 600}
-                fill={dimmed ? T.textMute : active ? color : T.text}
-                style={{ transition: 'fill 0.2s ease', userSelect: 'none' }}
-              >
-                {node.label}
-              </text>
+              {(showLabelAlways || active) && (
+                <text
+                  y={r + 12}
+                  textAnchor="middle"
+                  fontFamily={MONO}
+                  fontSize={isCore ? 11 : isCategory ? 9 : 7.5}
+                  fontWeight={isCore ? 700 : isCategory ? 600 : 500}
+                  fill={dimmed ? T.textMute : active ? color : T.text}
+                  style={{ transition: 'fill 0.2s ease', userSelect: 'none' }}
+                >
+                  {node.label}
+                </text>
+              )}
             </g>
           );
         })}

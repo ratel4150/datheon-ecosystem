@@ -1,11 +1,13 @@
 ---
 // src/pages/[lang]/landing.astro
+export const prerender = true;
+
 import { HomePage } from '@/_pages/home';
 import { BaseLayout } from '@/_app/layouts';
 import { getTranslation } from '@/_shared/lib/i18n';
+import { PAGE_META, buildOrganizationSchema, buildWebsiteSchema } from '@/_shared/lib/seo';
 
 export async function getStaticPaths() {
-  // Genera las rutas estáticas para los idiomas soportados
   return [
     { params: { lang: 'es' } },
     { params: { lang: 'en' } },
@@ -14,11 +16,17 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-// Si no hay lang, por defecto 'es'
-const currentLang = (lang as string) || 'es';
+const currentLang = (lang as 'es' | 'en' | 'fr') || 'es';
 const t = getTranslation(currentLang);
+const meta = PAGE_META.landing[currentLang];
 ---
 
-<BaseLayout lang={currentLang}>
+<BaseLayout
+  lang={currentLang}
+  seoTitle={meta.title}
+  seoDescription={meta.description}
+  seoPath="/landing"
+  seoStructuredData={[buildOrganizationSchema(), buildWebsiteSchema()]}
+>
   <HomePage lang={currentLang} t={t} />
 </BaseLayout>

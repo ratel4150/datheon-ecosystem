@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/hero/lib/constants.ts
 // _features/hero/lib/constants.ts
 import { alpha } from '@mui/material';
 

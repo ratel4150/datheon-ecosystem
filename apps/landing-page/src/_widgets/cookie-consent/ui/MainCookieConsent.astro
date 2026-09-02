@@ -1,0 +1,8 @@
+---
+// _widgets/cookie-consent/ui/MainCookieConsent.astro
+import { CookieConsentRoot } from './CookieConsentRoot';
+
+const { lang = 'es' } = Astro.props as { lang?: string };
+---
+
+<CookieConsentRoot client:load lang={lang} />

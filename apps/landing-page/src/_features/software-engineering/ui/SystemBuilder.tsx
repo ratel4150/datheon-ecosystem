@@ -22,11 +22,10 @@ interface SystemBuilderProps {
 export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
   const { containerRef, scale, activeIndex } = useScrollBuild();
   const activeStage = BUILD_STAGES[activeIndex];
-  const isFinal = activeIndex === BUILD_STAGES.length - 1;
 
   return (
     <Box ref={containerRef} sx={{ position: 'relative', height: { xs: `${BUILD_STAGES.length * 55}vh`, md: `${BUILD_STAGES.length * 62}vh` } }}>
-      <Box sx={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', px: 2 }}>
+      <Box sx={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', px: 2, py: 3 }}>
         <Box
           aria-hidden
           sx={{
@@ -39,7 +38,7 @@ export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
           }}
         />
 
-        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', mb: 2, maxWidth: 420 }}>
+        <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', mb: 2, maxWidth: 440, flexShrink: 0 }}>
           <Typography
             key={activeStage.id}
             component={motion.p}
@@ -50,17 +49,20 @@ export function SystemBuilder({ T, scrollHint }: SystemBuilderProps) {
           >
             {String(activeIndex + 1).padStart(2, '0')}/{String(BUILD_STAGES.length).padStart(2, '0')} · {activeStage.title}
           </Typography>
-          <Typography sx={{ fontSize: '0.85rem', color: T.textMute }}>{activeStage.narrative}</Typography>
+          <Typography sx={{ fontSize: '0.85rem', color: T.textMute, mb: 0.75 }}>{activeStage.narrative}</Typography>
+          <Typography sx={{ fontFamily: MONO, fontSize: '0.65rem', color: T.accent, fontWeight: 700 }}>
+            {activeStage.nodeCount} NODOS · {activeStage.edgeCount} CONEXIONES
+          </Typography>
         </Box>
 
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <SystemGraph visibleNodeIds={activeStage.nodeIds} visibleEdgeIds={activeStage.edgeIds} showLabels={isFinal} T={T} scale={scale} />
+        <Box sx={{ position: 'relative', zIndex: 1, flex: 1, minHeight: 0, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <SystemGraph visibleNodeIds={activeStage.nodeIds} visibleEdgeIds={activeStage.edgeIds} T={T} scale={scale} maxWidth={{ xs: 340, sm: 480, md: 640 }} />
         </Box>
 
         <Typography
           sx={{
             position: 'absolute',
-            bottom: 24,
+            bottom: 20,
             fontFamily: MONO,
             fontSize: '0.62rem',
             color: T.textMute,

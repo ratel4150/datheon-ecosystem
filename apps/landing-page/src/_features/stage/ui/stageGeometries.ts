@@ -1,4 +1,4 @@
-// _features/stage/ui/stageGeometries.ts
+// File: apps/landing-page/src/_features/stage/ui/stageGeometries.ts
 'use client';
 
 import type { StageId } from '../lib';
@@ -16,5 +16,5 @@ export const STAGE_GEOMETRY: Record<StageId, StageGeometrySpec> = {
   pyme: { kind: 'octahedron', args: [0.38, 0] },
   mid: { kind: 'dodecahedron', args: [0.34, 0] },
   enterprise: { kind: 'icosahedron', args: [0.36, 0] },
-  innovation: { kind: 'torusKnot', args: [0.22, 0.08, 100, 16] },
+  innovation: { kind: 'torusKnot', args: [0.22, 0.08, 128, 32] },
 };

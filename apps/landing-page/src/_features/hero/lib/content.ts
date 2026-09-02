@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/hero/lib/content.ts
 // _features/hero/lib/content.ts
 import type { Lang } from '@/_shared/types/i18n';
 

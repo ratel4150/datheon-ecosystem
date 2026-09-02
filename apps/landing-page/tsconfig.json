@@ -4,6 +4,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
+      "@/_app/*": ["./src/_app/*"],
       "@/_shared/*": ["./src/_shared/*"],
       "@/_entities/*": ["./src/_entities/*"],
       "@/_features/*": ["./src/_features/*"],

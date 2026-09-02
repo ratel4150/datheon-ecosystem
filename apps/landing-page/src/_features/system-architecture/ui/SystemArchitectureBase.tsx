@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_features/system-architecture/ui/SystemArchitectureBase.tsx
 'use client';
 
 import { Box, Typography, Container, GlobalStyles, alpha } from '@mui/material';
@@ -11,6 +12,7 @@ import { ArchitectureImage } from './ArchitectureImage';
 import { ChainAccordion } from './ChainAccordion';
 import { SignalSteps } from './SignalSteps';
 import { EnterWhereYouAre } from './EnterWhereYouAre';
+import DashboardPreview from './DashboardPreview';
 
 type Variant = 'desktop' | 'mobile';
 
@@ -58,7 +60,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
         }}
       />
 
-      {/* Efecto parallax: capa de fondo */}
       <Box
         component={motion.div}
         style={{ y: yParallax }}
@@ -78,7 +79,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
       />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Encabezado: grid */}
         <Box
           sx={{
             display: 'grid',
@@ -88,7 +88,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
             mb: { xs: 9, md: 11 },
           }}
         >
-          {/* Columna izquierda */}
           <Box
             component={motion.div}
             initial={{ opacity: 0, y: 16 }}
@@ -146,7 +145,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
             </Typography>
           </Box>
 
-          {/* Columna derecha: imagen */}
           {!isMobile ? (
             <Box
               ref={imageRef}
@@ -171,7 +169,7 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
                   px: 3,
                   py: 1.75,
                   borderBottom: `1px solid ${borderColor}`,
-                  bgcolor: isDark ? DARK.statsB : '#F4FAFE',
+                  bgcolor: isDark ? DARK.bg : '#F4FAFE',
                   transition: 'background-color 0.3s ease',
                 }}
               >
@@ -223,7 +221,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
           )}
         </Box>
 
-        {/* Signal Steps */}
         <Box sx={{ mb: { xs: 9, md: 11 } }}>
           <Typography
             sx={{
@@ -244,7 +241,6 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
 
         <Box sx={{ borderTop: `1px solid ${borderColor}`, maxWidth: 680, mx: 'auto', mb: { xs: 9, md: 11 }, transition: 'border-color 0.3s ease' }} />
 
-        {/* Enter Where You Are */}
         <Box ref={enterRef} sx={{ mb: { xs: 9, md: 11 } }}>
           <Typography
             sx={{
@@ -263,117 +259,168 @@ export function SystemArchitectureBase({ lang, variant }: SystemArchitectureBase
           <EnterWhereYouAre animate={enterInView} t={{ enterTagline: t.enterTagline }} />
         </Box>
 
-        {/* Cierre */}
-        <Box sx={{ textAlign: 'center', maxWidth: 620, mx: 'auto' }}>
-          <Box
-            sx={{
-              width: 52,
-              height: 52,
-              borderRadius: '50%',
-              mx: 'auto',
-              mb: 3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              bgcolor: isDark ? DARK.accentBg : C.accentBg,
-              border: `1px solid ${accentLine}`,
-            }}
-          >
-            <FiZap size={22} color={accentDkColor} />
+        {/* Dashboard + Cierre en grid: 3/4 dashboard, 1/4 texto */}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '3fr 1fr' },
+            gap: { xs: 4, md: 6 },
+            alignItems: 'center',
+            my: 6,
+          }}
+        >
+          {/* Columna izquierda: Dashboard Preview */}
+          <Box>
+            <DashboardPreview />
           </Box>
-          <Typography
-            sx={{
-              fontFamily: DISPLAY,
-              fontWeight: 700,
-              fontSize: { xs: '1.5rem', md: '1.9rem' },
-              lineHeight: 1.35,
-              color: textColor,
-              mb: 1,
-              transition: 'color 0.3s ease',
-            }}
-          >
-            {t.closingLine1}
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: DISPLAY,
-              fontWeight: 700,
-              fontSize: { xs: '1.5rem', md: '1.9rem' },
-              lineHeight: 1.35,
-              color: textMidColor,
-              mb: 3,
-              transition: 'color 0.3s ease',
-            }}
-          >
-            {t.closingLine2}
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: MONO,
-              fontSize: '0.85rem',
-              color: accentColor,
-              letterSpacing: '0.02em',
-              mb: 4.5,
-              transition: 'color 0.3s ease',
-            }}
-          >
-            {t.closingLine3}
-          </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center', gap: { xs: 1.5, sm: 3 } }}>
+          {/* Columna derecha: Texto de cierre */}
+                <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
             <Box
-              component={motion.button}
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              type="button"
               sx={{
-                appearance: 'none',
-                border: 'none',
-                cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 0.8,
-                bgcolor: accentColor,
-                color: '#fff',
-                fontFamily: 'inherit',
-                fontWeight: 700,
-                fontSize: '0.93rem',
-                px: 3.5,
-                py: 1.4,
-                borderRadius: '12px',
-                boxShadow: `0 4px 20px ${alpha(accentColor, 0.35)}`,
-                '&:hover': { bgcolor: accentDkColor },
-                transition: 'background-color 0.2s ease',
+                gap: 1,
+                mb: 2,
+                px: 2,
+                py: 0.5,
+                borderRadius: '20px',
+                bgcolor: alpha(accentColor, 0.1),
+                border: `1px solid ${alpha(accentColor, 0.15)}`,
               }}
             >
-              {t.cta1}
-              <FiArrowRight size={15} />
+              <FiZap size={14} color={accentColor} />
+              <Typography
+                sx={{
+                  fontFamily: MONO,
+                  fontSize: '0.6rem',
+                  fontWeight: 600,
+                  color: accentColor,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {l === 'es' ? 'EN ACCIÓN' : l === 'en' ? 'IN ACTION' : 'EN ACTION'}
+              </Typography>
+            </Box>
+
+            <Typography
+              sx={{
+                fontFamily: DISPLAY,
+                fontWeight: 700,
+                fontSize: { xs: '1.8rem', md: '2.2rem' },
+                lineHeight: 1.2,
+                color: textColor,
+                mb: 1,
+                transition: 'color 0.3s ease',
+              }}
+            >
+              {t.closingLine1}
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: DISPLAY,
+                fontWeight: 500,
+                fontSize: { xs: '1.2rem', md: '1.4rem' },
+                lineHeight: 1.4,
+                color: textMidColor,
+                mb: 3,
+                transition: 'color 0.3s ease',
+              }}
+            >
+              {t.closingLine2}
+            </Typography>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'center', md: 'flex-start' },
+                justifyContent: { xs: 'center', md: 'flex-start' },
+                gap: { xs: 1.5, sm: 2 },
+              }}
+            >
+              <Box
+                component={motion.button}
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                type="button"
+                sx={{
+                  appearance: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 0.8,
+                  bgcolor: accentColor,
+                  color: '#fff',
+                  fontFamily: 'inherit',
+                  fontWeight: 600,
+                  fontSize: '0.85rem',
+                  px: 2.5,
+                  py: 1.2,
+                  borderRadius: '10px',
+                  boxShadow: `0 4px 16px ${alpha(accentColor, 0.3)}`,
+                  transition: 'all 0.25s ease',
+                  '&:hover': {
+                    bgcolor: accentDkColor,
+                    boxShadow: `0 8px 24px ${alpha(accentColor, 0.4)}`,
+                  },
+                }}
+              >
+                {t.cta1}
+                <FiArrowRight size={14} />
+              </Box>
+
+              <Box
+                component={motion.button}
+                whileHover={{ y: -1 }}
+                type="button"
+                sx={{
+                  appearance: 'none',
+                  bgcolor: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 0.5,
+                  fontFamily: 'inherit',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                  color: textMidColor,
+                  pb: 0.2,
+                  borderBottom: `2px solid transparent`,
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    color: accentColor,
+                    borderBottomColor: accentColor,
+                  },
+                }}
+              >
+                {t.cta2}
+                <FiArrowRight size={13} />
+              </Box>
             </Box>
 
             <Box
-              component={motion.button}
-              whileHover={{ y: -1 }}
-              type="button"
               sx={{
-                appearance: 'none',
-                bgcolor: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 0.6,
-                fontFamily: 'inherit',
-                fontSize: '0.88rem',
-                fontWeight: 600,
-                color: textMidColor,
-                pb: 0.3,
-                borderBottom: `1px solid transparent`,
-                transition: 'color 0.2s ease, border-color 0.2s ease',
-                '&:hover': { color: accentColor, borderColor: accentLine },
+                mt: 3,
+                pt: 2,
+                borderTop: `1px solid ${alpha(accentColor, 0.15)}`,
               }}
             >
-              {t.cta2}
-              <FiArrowRight size={13} />
+              <Typography
+                sx={{
+                  fontFamily: MONO,
+                  fontSize: '0.7rem',
+                  color: textMuteColor,
+                  letterSpacing: '0.02em',
+                  transition: 'color 0.3s ease',
+                }}
+              >
+                {t.closingLine3}
+              </Typography>
             </Box>
           </Box>
         </Box>

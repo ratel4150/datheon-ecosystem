@@ -1,6 +1,9 @@
 ---
 // src/_app/layouts/BaseLayout.astro
+import SEOHead from '@/_shared/ui/SEOHead.astro';
 import { MainHeader } from '@/_widgets/header';
+import { MainFooter } from '@/_widgets/footer';
+import { MainCookieConsent } from '@/_widgets/cookie-consent';
 import { ThemeProvider } from '@/_app/providers/ThemeProvider';
 import { QueryProvider } from '@/_app/providers/QueryProvider';
 import { ClerkProvider } from '@/_app/providers/ClerkProvider';
@@ -9,9 +12,21 @@ import '@/_app/styles/globals.css';
 export interface Props {
   lang?: string;
   children?: any;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoPath?: string;
+  seoImage?: string;
+  seoStructuredData?: Record<string, unknown>[];
 }
 
-const { lang = 'es' } = Astro.props;
+const {
+  lang = 'es',
+  seoTitle = 'Datheón - Smart Tech Solutions',
+  seoDescription = 'Datheón diseña y construye sistemas de software reales: software, IA, agentes, cloud e IoT.',
+  seoPath = '/landing',
+  seoImage = '/og-image.png',
+  seoStructuredData = [],
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,7 +34,7 @@ const { lang = 'es' } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Datheón - Smart Tech Solutions</title>
+    <SEOHead lang={lang} path={seoPath} title={seoTitle} description={seoDescription} image={seoImage} structuredData={seoStructuredData} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,6 +50,8 @@ const { lang = 'es' } = Astro.props;
           <main>
             <slot />
           </main>
+          <MainFooter lang={lang} />
+          <MainCookieConsent lang={lang} />
         </ClerkProvider>
       </QueryProvider>
     </ThemeProvider>

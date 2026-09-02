@@ -7,12 +7,46 @@
   html {
     scroll-behavior: smooth;
     background-color: #0B0F2B;
+    color: #F5F5F5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    /* Variables del header — default = dark, para que coincida
+       con el theme por defecto ('dark') antes de que hidrate el JS */
+    --header-bg: #0B0F2B;
+    --header-bg-sub: #10163f;
+    --header-border: rgba(245, 245, 245, 0.08);
+    --header-text: #F5F5F5;
+    --header-text-mid: #B8BDD6;
+    --header-text-mute: #7B82A6;
   }
-  
-  body {
-    @apply antialiased;
+
+  html.light {
+    background-color: #ffffff;
+    color: #0B0F2B;
+
+    --header-bg: #ffffff;
+    --header-bg-sub: #fafbfc;
+    --header-border: #ebebeb;
+    --header-text: #0B0F2B;
+    --header-text-mid: #4A5068;
+    --header-text-mute: #8891AA;
+  }
+
+  html.dark {
     background-color: #0B0F2B;
     color: #F5F5F5;
+
+    --header-bg: #0B0F2B;
+    --header-bg-sub: #10163f;
+    --header-border: rgba(245, 245, 245, 0.08);
+    --header-text: #F5F5F5;
+    --header-text-mid: #B8BDD6;
+    --header-text-mute: #7B82A6;
+  }
+
+  body {
+    @apply antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -20,7 +54,7 @@
   .gradient-text {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300;
   }
-  
+
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }

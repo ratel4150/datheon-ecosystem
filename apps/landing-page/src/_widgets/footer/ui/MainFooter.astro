@@ -1,0 +1,8 @@
+---
+// _widgets/footer/ui/MainFooter.astro
+import { FooterMain } from './FooterMain';
+
+const { lang = 'es' } = Astro.props as { lang?: string };
+---
+
+<FooterMain client:visible currentLang={lang} />
