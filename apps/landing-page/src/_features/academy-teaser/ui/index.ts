@@ -1,0 +1,1 @@
+export { AcademyTeaser } from './AcademyTeaser';

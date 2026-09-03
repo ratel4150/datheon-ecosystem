@@ -1,2 +1,1 @@
-export type Lang = 'es' | 'en' | 'fr';
-export type Translations = Record<string, unknown>;
+export type { Lang, Locale, Translations } from '@datheon/i18n';

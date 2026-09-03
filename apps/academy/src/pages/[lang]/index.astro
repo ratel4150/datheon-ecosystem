@@ -1,0 +1,21 @@
+---
+export const prerender = true;
+
+import { AcademyLandingPage } from '@/_pages/home';
+import { BaseLayout } from '@/_app/layouts';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const currentLang = (lang as 'es' | 'en' | 'fr') || 'es';
+---
+
+<BaseLayout lang={currentLang} seoPath="/">
+  <AcademyLandingPage lang={currentLang} />
+</BaseLayout>

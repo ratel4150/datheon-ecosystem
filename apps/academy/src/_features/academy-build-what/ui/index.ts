@@ -1,0 +1,1 @@
+export { AcademyBuildWhat } from './AcademyBuildWhat';

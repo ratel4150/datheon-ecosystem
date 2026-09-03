@@ -1,0 +1,9 @@
+---
+import { AcademyApp } from '@/_app/AcademyApp';
+import type { Lang } from '@datheon/i18n';
+
+export interface Props { lang: Lang; }
+const { lang } = Astro.props;
+---
+
+<AcademyApp lang={lang} client:only="react" />

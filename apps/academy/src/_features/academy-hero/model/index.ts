@@ -1,0 +1,1 @@
+export { useAcademyHero } from './useAcademyHero';

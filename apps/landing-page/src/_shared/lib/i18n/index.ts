@@ -1,2 +1,2 @@
-// File: apps/landing-page/src/_shared/lib/i18n/index.ts
-export * from './translations';
+// apps/landing-page/src/_shared/lib/i18n/index.ts
+export { getTranslation, translations, defaultLocale } from '@datheon/i18n';

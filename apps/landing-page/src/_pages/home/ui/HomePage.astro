@@ -7,6 +7,7 @@ import { TechnologyStack } from '@/_features/technology-stack';
 import { SoftwareEngineering } from '@/_features/software-engineering';
 import { SectionDivider } from '@/_shared/ui';
 import type { Translations, Lang } from '@/_shared/types/i18n';
+import { AcademyTeaser } from '@/_features/academy-teaser';
 
 export interface Props {
   lang: Lang;
@@ -18,12 +19,17 @@ const { lang, t } = Astro.props;
 
 <main>
   <Hero lang={lang} client:load />
+  <SectionDivider client:load />
   <Ecosystem lang={lang} client:load />
   <SectionDivider client:load />
   <Solutions lang={lang} client:load />
   <SectionDivider client:load />
   <Stage lang={lang} client:load />
+  <SectionDivider client:load />
   <TechnologyStack lang={lang} client:load />
   <SectionDivider client:load />
   <SoftwareEngineering lang={lang} client:load />
+  <SectionDivider client:load />
+    <AcademyTeaser lang={lang} client:load />
+    <SectionDivider client:load />
 </main>

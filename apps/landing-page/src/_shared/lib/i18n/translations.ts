@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_shared/lib/i18n/translations.ts
 import type { Translations, Locale } from '../../types/i18n';
 
 export const translations: Record<Locale, Translations> = {

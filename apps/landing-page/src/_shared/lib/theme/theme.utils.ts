@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_shared/lib/theme/theme.utils.ts
 type Theme = 'light' | 'dark';
 
 export const getThemePreference = (): Theme | null => {

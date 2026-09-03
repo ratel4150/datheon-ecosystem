@@ -1,0 +1,1 @@
+export { AcademyDashboardShell } from './ui';

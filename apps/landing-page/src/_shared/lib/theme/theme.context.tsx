@@ -1,3 +1,4 @@
+// File: apps/landing-page/src/_shared/lib/theme/theme.context.tsx
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
